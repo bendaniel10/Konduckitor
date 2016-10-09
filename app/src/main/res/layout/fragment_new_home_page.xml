@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/light_yellow"
+    android:orientation="vertical"
+    tools:context="com.bentechapps.konduckitor.activity.fragments.HomePageFragement">
+
+    <TextView
+        android:id="@+id/mast_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-thin"
+        android:text="Conductor"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="@color/brown"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/imageView2"
+        android:layout_toLeftOf="@+id/imageView2" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:background="@color/black_overlay"
+        android:src="@drawable/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        />
+    <Button
+        android:id="@+id/quick_play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mast_head"
+        android:layout_marginTop="52dp"
+        android:layout_toRightOf="@+id/quick_play_image_wrapper"
+        android:background="@drawable/app_button_right"
+        android:paddingRight="5dp"
+        android:text="@string/quick_play"
+        android:textColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/quick_play_image_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/quick_play_button"
+        android:layout_alignTop="@+id/quick_play_button"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/app_button_center"
+
+        android:layout_alignParentStart="true"
+        >
+
+        <ImageView
+            android:id="@+id/quick_play_image"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/play" />
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/mission_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/quick_play_button"
+        android:layout_alignRight="@+id/quick_play_button"
+        android:layout_below="@+id/quick_play_button"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/mission_image_wrapper"
+        android:background="@drawable/app_button_right"
+        android:text="@string/mission"
+        android:textColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/mission_image_wrapper"
+        android:layout_alignBottom="@id/mission_button"
+        android:layout_alignTop="@+id/mission_button"
+        android:layout_width="wrap_content"
+        android:background="@drawable/app_button_center"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/mission_image"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mission" />
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/mission_button"
+        android:layout_alignRight="@+id/mission_button"
+        android:layout_below="@+id/mission_button"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/settings_image_wrapper"
+        android:background="@drawable/app_button_right"
+        android:text="@string/settings"
+        android:textColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/settings_image_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/settings_button"
+        android:layout_alignTop="@+id/settings_button"
+        android:background="@drawable/app_button_center">
+
+        <ImageView
+            android:id="@+id/settings_image"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/settings" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/settings_button"
+        android:layout_marginTop="68dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <ImageButton
+            android:id="@+id/sound_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="1dp"
+            android:background="@drawable/app_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/sound" />
+
+        <ImageButton
+            android:id="@+id/music_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="1dp"
+            android:layout_toRightOf="@id/sound_button"
+            android:background="@drawable/app_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/music" />
+
+        <ImageButton
+            android:id="@+id/rate_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="1dp"
+            android:background="@drawable/app_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/star" />
+
+        <ImageButton
+            android:id="@+id/help_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="1dp"
+            android:layout_toLeftOf="@id/rate_button"
+            android:background="@drawable/app_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/help" />
+
+        <ImageButton
+            android:id="@+id/shop_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="1dp"
+            android:layout_toLeftOf="@id/help_button"
+            android:background="@drawable/app_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/shop" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:background="@drawable/app_button_center"
+        android:id="@+id/highscore_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/mast_head"
+        android:text="@string/highscore"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="35dp"
+        android:layout_alignTop="@id/highscore_text"
+        android:background="@drawable/app_button_left"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/highscore_text"
+        android:layout_below="@id/mast_head"
+        android:layout_toLeftOf="@id/highscore_text"
+        android:layout_toStartOf="@id/highscore_text"
+        android:src="@drawable/highscore" />
+
+
+
+</RelativeLayout>

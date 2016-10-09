@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_yellow"
+    android:padding="3dp"
+    android:layout_margin="5dp">
+
+    <TextView
+        android:textColor="@color/light_red"
+        android:id="@+id/mission_title"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="@color/black"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/failed_caps"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RelativeLayout
+        android:id="@+id/score_coin_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mission_title"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="Score: 84" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/score"
+            android:layout_toEndOf="@id/score"
+            android:id="@+id/score_image"
+            android:scaleType="centerInside"
+            android:src="@drawable/trophy" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/money"
+            android:scaleType="centerInside"
+            android:src="@drawable/money" />
+
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="Money: 530" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:layout_marginBottom="2dp"
+        android:id="@+id/mission_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/score_coin_panel"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:background="@drawable/app_button"
+        android:id="@+id/restart_button"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/mission_list"
+        android:scaleType="centerInside"
+        android:src="@drawable/replay" />
+
+    <ImageButton
+        android:background="@drawable/app_button"
+        android:id="@+id/shop_button"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/mission_list"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/shop" />
+
+    <ImageButton
+        android:background="@drawable/app_button"
+        android:id="@+id/home_button"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/mission_list"
+        android:scaleType="centerInside"
+        android:src="@drawable/home" />
+
+</RelativeLayout>

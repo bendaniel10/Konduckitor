@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/clear_selected_image"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/selected"
+            android:layout_toLeftOf="@+id/selected"
+            android:layout_toStartOf="@id/selected"
+            android:background="@drawable/app_button_left"
+            android:scaleType="centerInside"
+            android:src="@drawable/delete" />
+
+        <Button
+            android:id="@+id/selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/app_button_center"
+            android:text="95"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/white"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/powerUpCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/powerUpContainer"
+            android:layout_below="@id/selected"
+            android:layout_toLeftOf="@+id/powerUpContainer"
+            android:layout_toStartOf="@id/powerUpContainer"
+            android:background="@drawable/app_button_left"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="20"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/white" />
+
+        <RelativeLayout
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/app_button_center"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/powerUpContainer"
+            android:layout_below="@id/selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/powerUp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/regenerate_life" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:paddingTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <com.bentechapps.konduckitor.view.custom.WalletButton
+            android:id="@+id/fives"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_toLeftOf="@+id/tens"
+            android:layout_toStartOf="@+id/tens"
+            android:background="@drawable/five_wallet_denom"
+            android:text="5 (52)"
+            android:textColor="@android:color/white" />
+
+        <com.bentechapps.konduckitor.view.custom.WalletButton
+            android:id="@+id/tens"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_toLeftOf="@+id/twenties"
+            android:layout_toStartOf="@+id/twenties"
+            android:background="@drawable/ten_wallet_denom"
+            android:text="10 (2)"
+            android:textColor="@android:color/white" />
+
+        <com.bentechapps.konduckitor.view.custom.WalletButton
+            android:id="@+id/twenties"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/twenty_wallet_denom"
+            android:text="20 (4)"
+            android:textColor="@android:color/white" />
+
+        <com.bentechapps.konduckitor.view.custom.WalletButton
+            android:id="@+id/fifties"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_toEndOf="@+id/twenties"
+            android:layout_toRightOf="@+id/twenties"
+            android:background="@drawable/fifty_wallet_denom"
+            android:text="50 (10)"
+            android:textColor="@android:color/white" />
+
+        <com.bentechapps.konduckitor.view.custom.WalletButton
+            android:id="@+id/hundreds"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_toEndOf="@+id/fifties"
+            android:layout_toRightOf="@+id/fifties"
+            android:background="@drawable/hundred_wallet_denom"
+            android:text="100 (1)"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+</LinearLayout>
+

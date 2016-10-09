@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Conductor</string>
+    <string name="play">PLAY</string>
+    <string name="play_tutorial">PLAY TUTORIAL</string>
+    <string name="title_activity_game_play">Conductor</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="author">Created by: <a href="http://www.twitter.com/bendaniel10">Ben</a></string>
+    <string name="images_credits"><a href="http://www.freepiks.com">FreePiks</a></string>
+    <string name="sound_credits"><a href="http://www.pacdv.com/sounds">PacDV Free Sound Effects</a></string>
+    <string name="difficulty">Difficulty</string>
+    <string name="default_power_up">My power-up</string>
+    <string name="sfx">SFX</string>
+    <string name="music">Music</string>
+    <string name="gameplay">GamePlay</string>
+    <string name="sound">Sound</string>
+    <string name="highscore">highscore</string>
+    <string name="game_over">GAME OVER</string>
+    <string name="challenge_message">how coordinated are you?</string>
+    <string name="shop">SHOP</string>
+    <string name="help">help</string>
+    <string name="preferences">preferences</string>
+    <string name="silent_mode">silent mode</string>
+    <string name="reputation">reputation</string>
+    <string name="pause">Pause</string>
+    <string name="you_have">you have</string>
+    <string name="costs">costs</string>
+    <string name="buy">BUY</string>
+    <string name="power_up_image">Power up image</string>
+    <string name="individual_user_tile">Individual user tile</string>
+    <string name="points">points</string>
+    <string name="run_time">Run Time:</string>
+    <string name="score">score</string>
+    <string name="credits">Credits</string>
+    <string name="resume_game">Resume Game</string>
+    <string name="home">Home</string>
+    <string name="power_up">Powerup</string>
+    <string name="tutorial_pause_hint">Press play to start the game, you can pause or skip tutorial from here.</string>
+    <string name="user_tile_help">This tile represents a single passenger. The figure on the top left is the amount of money that the passenger is with. The amount below is how much the passenger is supposed to pay. The patience signifies how long time is left until the passenger alights. The background changes to let you know passengers\' statuses; green, yellow and red signifies their patience levels while purple means the passenger is settled. Every passenger should be settled before they alight or your health will be continually depleted by the passenger. Settled passengers\' background is fixed to purple, not minding their alight time</string>
+    <string name="wallet_power_up_system_help_message">This bottom toolbar contains the power up button and the wallet system, it can be swiped left and right on smaller displays. To select 30, press 10 followed by a 20. The numbers in the brackets signify how many of that denomination remains. You can view your wallet selection just beside the clear selection button (marked X). Above the clear selection button is the power up button. Press it to activate your power up. The number of power ups remaining is displayed in on the button.</string>
+    <string name="header_tile_help_message">The tool bar on top shows your play time on the left, your current health in the middle and your current score on the right. You can pause the game with the pause button that is beside your current score.</string>
+    <string name="person_tile_hint">This is a passenger. The amount you\'ll receive is on the top left, the amount the passenger should pay is on the top right.</string>
+    <string name="person_tile_money_collected_hint">You now owe the passenger change, as indicated on top left of the passenger, the passenger doesn\'t owe you.</string>
+    <string name="give_change_hint">This is your wallet, your money is split into denominations. The quantity you have is on the top right.</string>
+    <string name="person_tile_money_collected_title">Now you\'ve collected payment…</string>
+    <string name="power_up_hint">This is your power up, button. The quantity you have is shown on the button. Tap this button any time you want to activate a power up.</string>
+    <string name="tutorial_pause_title"><![CDATA[Play & Pause Button]]></string>
+    <string name="person_tile_title">Passengers</string>
+    <string name="give_change_title">Giving Back Change</string>
+    <string name="power_up_title">Power Ups</string>
+    <string name="time_and_life_bar_hint">Finally, this is the total time of your current game play, the higher you play the more your reputation. Power ups help to last longer. Beside this is your health bar, once your health bar is completely finished, your game will end. You can replay this tutorial from the help menu in the main page.</string>
+    <string name="time_and_life_bar_title"><![CDATA[Play Time & Health Bar]]></string>
+    <string name="skip_tutorial">Skip Tutorial</string>
+    <string name="lets_go">Let\'s Go</string>
+    <string name="paused">PAUSED</string>
+    <string name="money">money</string>
+    <string name="failed_caps">FAILED</string>
+    <string name="passed_caps">PASSED</string>
+    <string name="quick_play">QUICK PLAY</string>
+    <string name="mission">MISSION</string>
+    <string name="settings">SETTINGS</string>
+</resources>

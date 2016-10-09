@@ -1,0 +1,134 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_orange_light"
+    tools:context="com.bentechapps.konduckitor.activity.fragments.HelpFragment">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/play_tutorial"
+            android:text="@string/play_tutorial"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            style="?android:attr/buttonStyle"
+            android:background="@drawable/global_button_background_selector"
+            android:textColor="@android:color/white"
+            android:padding="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/user_tile_label"
+            android:textColor="@color/black_overlay"
+            android:text="Passenger"
+            android:layout_below="@id/play_tutorial"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <include
+            layout="@layout/user_tile"
+            android:id="@+id/person"
+            android:layout_below="@id/user_tile_label"
+            android:layout_marginRight="5dp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/user_title_text_view"
+            android:textColor="@color/black"
+            android:text="@string/user_tile_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/person"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/person"
+            android:layout_toEndOf="@+id/person" />
+
+        <View
+            android:id="@+id/customView"
+            android:layout_height="2dp"
+            android:layout_margin="30dp"
+            android:background="@color/black_overlay"
+            android:layout_below="@+id/user_title_text_view"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content" />
+
+        <include
+            layout="@layout/tail_tile"
+            android:id="@+id/tail_tile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView19"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_below="@+id/tail_tile"
+            android:textColor="@color/black"
+            android:text="@string/wallet_power_up_system_help_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/wallet_text_view_explaination" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Wallet &amp; Power Up"
+            android:id="@+id/textView19"
+            android:textColor="@color/black_overlay"
+            android:layout_alignTop="@+id/customView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp" />
+
+        <View
+            android:id="@+id/h2"
+            android:layout_height="2dp"
+            android:layout_margin="30dp"
+            android:background="@color/black_overlay"
+            android:layout_below="@+id/wallet_text_view_explaination"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Run time, Health bar, Score and the Pause button"
+            android:id="@+id/textView20"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black_overlay"
+            android:layout_alignTop="@+id/h2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <include
+            layout="@layout/header_tile"
+            android:id="@+id/header_tile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView20"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_below="@+id/header_tile"
+            android:textColor="@color/black"
+            android:text="@string/header_tile_help_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/header_tile_explanation" />
+    </RelativeLayout>
+</ScrollView>

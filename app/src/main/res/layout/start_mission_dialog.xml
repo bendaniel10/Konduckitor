@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/light_yellow"
+    android:padding="3dp"
+    android:layout_margin="5dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:textColor="@color/white"
+        android:id="@+id/mission_title"
+        android:layout_width="match_parent"
+        android:background="@color/black"
+        android:gravity="center"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="2dp"
+        android:text="Mission 6"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ListView
+        android:id="@+id/mission_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mission_title"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:background="@drawable/app_button"
+        android:id="@+id/ok_button"
+        android:scaleType="centerInside"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/mission_list"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/play"
+        android:contentDescription="@string/lets_go" />
+</RelativeLayout>

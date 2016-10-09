@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/light_yellow"
+    android:padding="10dp"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/icon"
+        android:layout_margin="2dp"
+        android:src="@drawable/regenerate_life"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:contentDescription="@string/power_up_image" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:textColor="@color/black"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="A very brief description about what the power up can do, you can use this to explain very very quickly."
+        android:id="@+id/description"
+        android:layout_below="@+id/name"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_toEndOf="@id/icon"
+        android:layout_toLeftOf="@+id/costs"
+        android:layout_toStartOf="@+id/costs" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/buy"
+        android:id="@+id/buy"
+        android:background="@drawable/app_button"
+        android:textColor="@android:color/holo_green_dark"
+        android:layout_below="@+id/description"
+        android:layout_alignRight="@+id/costs"
+        android:layout_alignEnd="@+id/costs"
+        android:layout_marginTop="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="300"
+        android:id="@+id/costs"
+        android:textColor="@color/black"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/costs"
+        android:textColor="@color/black_overlay"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/have"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="10"
+        android:id="@+id/have"
+        android:textColor="@color/black"
+        android:layout_below="@+id/textView6"
+        android:layout_alignRight="@+id/textView6"
+        android:layout_alignEnd="@+id/textView6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_overlay"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/you_have"
+        android:id="@+id/textView6"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/buy"
+        android:layout_alignEnd="@+id/buy" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="POWER UP"
+        android:textColor="@color/black"
+        android:id="@+id/name"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_toLeftOf="@+id/textView6"
+        android:layout_toStartOf="@+id/textView6" />
+</RelativeLayout>

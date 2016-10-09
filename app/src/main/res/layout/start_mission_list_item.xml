@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white_smoke"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:background="@drawable/app_button"
+        android:scaleType="centerInside"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/star"
+        android:id="@+id/sub_mission_image"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white_smoke"
+        android:paddingLeft="10dp"
+        android:gravity="start|center"
+        android:text="Have 10 angry passengers at a time"
+        android:id="@+id/sub_mission_desc"
+        android:layout_toRightOf="@+id/sub_mission_image"
+        android:layout_alignBottom="@+id/sub_mission_image"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>
