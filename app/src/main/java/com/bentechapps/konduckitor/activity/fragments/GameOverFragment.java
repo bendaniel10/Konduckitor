@@ -127,16 +127,14 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
         GamePlayFragment gamePlayFragment = new GamePlayFragment();
         GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData(getActivity());
         gamePlayFragment.setGamePlayFragmentData(gamePlayFragmentData);
-        mainActivity.setGamePlayFragment(gamePlayFragment);
-        mainActivity.switchFragmentsAddToBackStack(gamePlayFragment);
+        mainActivity.switchFragmentsAddToBackStack(R.id.fragment_container, gamePlayFragment);
         Sound.playReplaySfx();
     }
 
     private void handleHome() {
         Sound.playGamePlayMusic();
         HomePageFragement homePageFragement = new HomePageFragement();
-        mainActivity.setHomePageFragementFragment(homePageFragement);
-        mainActivity.switchFragments(homePageFragement);
+        mainActivity.switchFragments(R.id.fragment_container, homePageFragement);
     }
 
     @Override

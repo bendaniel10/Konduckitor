@@ -1,6 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <dimen name="radial_gradient">30dip</dimen>
+
+    <!--Text Sizes-->
+    <dimen name="headline_text_size">20sp</dimen>
+    <dimen name="spinner_item_size">18sp</dimen>
+    <dimen name="sub_headline_text_size">22sp</dimen>
+    <dimen name="body_text_size">14sp</dimen>
+    <dimen name="settings_title_text_size">14sp</dimen>
+    <dimen name="settings_category_text_size">14sp</dimen>
+    <dimen name="hint_link_text_size">14sp</dimen>
+    <dimen name="edit_text_size">10sp</dimen>
+    <dimen name="notification_change_font_size">12sp</dimen>
+    <dimen name="hint_text_size">13sp</dimen>
+    <dimen name="table_title_text_size">14sp</dimen>
+    <dimen name="dashboard_title_text_size">16sp</dimen>
+    <dimen name="table_text_text_size">14sp</dimen>
+    <dimen name="dashboard_text_text_size">26sp</dimen>
+    <dimen name="fab_text_size">14sp</dimen>
+    <!--End Text Sizes-->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="onboarding_controls_height">56dp</dimen>
+    <dimen name="larger_container_padding">25dp</dimen>
+    <dimen name="primary_account_label_padding">4dp</dimen>
+    <dimen name="medTxtSize">8dp</dimen>
+    <dimen name="touch_target_size">48dp</dimen>
+    <dimen name="large_content_spacing">16dp</dimen>
+    <dimen name="layout_padding_top">30dp</dimen>
+    <dimen name="tab_indicator_height">2dp</dimen>
+    <dimen name="notification_item_image_size">48dp</dimen>
+    <dimen name="credit_score_progress_size">90dp</dimen>
+    <dimen name="credit_score_progress_text_size">20sp</dimen>
+    <dimen name="empty_dashboard_image_size">180dp</dimen>
+    <dimen name="dashboard_icons_size">64dp</dimen>
+    <dimen name="login_card_view_width">300dp</dimen>
+    <dimen name="login_card_view_height">410dp</dimen>
+    <dimen name="login_layout_marginBottom_card_view">60dp</dimen>
+    <dimen name="login_tab_indicator_height">2dp</dimen>
+    <dimen name="signin_layout_height_btn">40dp</dimen>
+    <dimen name="profile_image_size">64dp</dimen>
+    <dimen name="nav_header_height">180dp</dimen>
+    <dimen name="login_margin_top">50dp</dimen>
+    <dimen name="signup_layout_height">450dp</dimen>
+    <dimen name="signup_layout_width">300dp</dimen>
+    <dimen name="signup_margin_top">50dp</dimen>
+    <dimen name="signup_margin_top_fields">4dp</dimen>
+    <dimen name="signup_margin_left">25dp</dimen>
+    <dimen name="signup_padding_right">25dp</dimen>
+    <dimen name="signup_padding_left">25dp</dimen>
+    <dimen name="signup_margin_right">25dp</dimen>
+    <dimen name="intro_text_top_margin">25dp</dimen>
+    <dimen name="onboarding_text_top_margin">350dp</dimen>
+    <dimen name="fab_margin">32dp</dimen>
+    <dimen name="socialmedTxtSize">12dp</dimen>
+    <dimen name="social_signup_layout_height">450dp</dimen>
+    <dimen name="social_signup_layout_width">300dp</dimen>
+    <dimen name="social_signup_margin_top">50dp</dimen>
+    <dimen name="social_signup_margin_top_fields">20dp</dimen>
+    <dimen name="social_signup_margin_left">40dp</dimen>
+    <dimen name="social_signup_padding_right">40dp</dimen>
+    <dimen name="social_signup_padding_left">40dp</dimen>
+    <dimen name="social_signup_margin_right">40dp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="fab_menu_icons_size">72dp</dimen>
+    <dimen name="profile_view_profile_image_size">200dp</dimen>
+    <dimen name="profile_edit_profile_image_size">200dp</dimen>
+    <dimen name="load_more_progress_size">23dp</dimen>
+    <dimen name="intro_image_size">250dp</dimen>
+    <dimen name="sign_in_banner_padding">64dp</dimen>
+    <dimen name="sign_up_banner_padding">36dp</dimen>
+    <dimen name="social_media_button_size">48dp</dimen>
+    <dimen name="intro_logo_height">100dp</dimen>
+    <dimen name="bank_profile_options_height">70dp</dimen>
+    <dimen name="menu_badge_image_size">16dp</dimen>
+    <dimen name="edit_text_date_icon_size">24dp</dimen>
+    <dimen name="forgot_password_image_size">100dp</dimen>
+    <dimen name="forgot_reset_mail_size">150dp</dimen>
+    <dimen name="support_view_img_size">150dp</dimen>
+    <dimen name="reset_password_image_size">100dp</dimen>
+    <dimen name="hint_link_height">20dp</dimen>
+    <dimen name="edit_profile_icon_width">20dp</dimen>
+    <dimen name="profile_circle_border_width">6dp</dimen>
+    <dimen name="text_notification_details_text_size">18sp</dimen>
+    <dimen name="info_icon_size">100dp</dimen>
+    <dimen name="feedback_image_size">100dp</dimen>
+    <dimen name="add_card_image_size">100dp</dimen>
+    <dimen name="add_mandate_image_size">100dp</dimen>
+    <dimen name="disputes_image_size">100dp</dimen>
+    <dimen name="notification_icon_size">150dp</dimen>
+    <dimen name="friend_list_verified_image_size">16dp</dimen>
+    <dimen name="home_hero_height">150dp</dimen>
+    <dimen name="home_play_button_size">100dp</dimen>
+    <item name="textview_shadow_dx" format="float" type="dimen">1.2</item>
+    <item name="textview_shadow_dy" format="float" type="dimen">1.2</item>
+    <item name="textview_shadow_radius" format="float" type="dimen">1.2</item>
 
 </resources>

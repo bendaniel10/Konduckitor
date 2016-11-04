@@ -70,7 +70,7 @@ public class MissionFailedDialog extends Dialog implements View.OnClickListener 
         gamePlayFragment.getActivity().getSupportFragmentManager().popBackStack();
         gamePlayFragment.getActivity().getSupportFragmentManager().popBackStack();
         ShopItemFragment shopItemFragment = new ShopItemFragment();
-        ((MainActivity) gamePlayFragment.getActivity()).switchFragments(shopItemFragment);
+        ((MainActivity) gamePlayFragment.getActivity()).switchFragments(R.id.fragment_container, shopItemFragment);
 
     }
 

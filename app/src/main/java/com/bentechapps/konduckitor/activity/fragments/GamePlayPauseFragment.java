@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
@@ -56,7 +55,7 @@ public class GamePlayPauseFragment extends DialogFragment implements View.OnClic
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        gamePlayFragment = ((MainActivity) getActivity()).getGamePlayFragment();
+        gamePlayFragment = (GamePlayFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         appData = ApplicationData.getInstance(getActivity());
         sfxSwitch = (Switch) getView().findViewById(R.id.sfx_switch);
         soundSwitch = (Switch) getView().findViewById(R.id.music_switch);
@@ -65,7 +64,7 @@ public class GamePlayPauseFragment extends DialogFragment implements View.OnClic
         defaultPowerUp.setAdapter(new PreferenceSpinnerAdapter(getActivity(), R.layout.shop_spinner_item,
                 R.id.text, (ShopItem[]) ShopItem.list(getActivity()).toArray()));
         homeButton = (Button) getView().findViewById(R.id.homeButton);
-         skipTutorialButton = (Button) getView().findViewById(R.id.skipTutorial);
+        skipTutorialButton = (Button) getView().findViewById(R.id.skipTutorial);
         resumeGameButton = (Button) getView().findViewById(R.id.resumeGameButton);
 
         sfxSwitch.setOnCheckedChangeListener(this);
@@ -80,7 +79,7 @@ public class GamePlayPauseFragment extends DialogFragment implements View.OnClic
         defaultPowerUp.setSelection(appData.getDefaultPowerUp());
 
 
-        if(gamePlayFragment instanceof GamePlayTutorialFragment) {
+        if (gamePlayFragment instanceof GamePlayTutorialFragment) {
             homeButton.setVisibility(View.GONE);
         } else {
             skipTutorialButton.setVisibility(View.GONE);
@@ -153,7 +152,7 @@ public class GamePlayPauseFragment extends DialogFragment implements View.OnClic
     }
 
     private void handleSkipTutorial() {
-        if(gamePlayFragment instanceof GamePlayTutorialFragment) {
+        if (gamePlayFragment instanceof GamePlayTutorialFragment) {
             Sound.playButtonClickSfx();
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Exit tutorial? You can always replay this tutorial from the help menu.");

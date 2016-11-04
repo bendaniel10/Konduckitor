@@ -21,7 +21,7 @@ public class GamePlayTutorialHeaderView extends GamePlayHeaderView {
     @Override
     public void handlePause() {
         super.handlePause();
-        GamePlayTutorialFragment gamePlayTutorialFragment = ((GamePlayTutorialFragment) mainActivity.getGamePlayFragment());
+        GamePlayTutorialFragment gamePlayTutorialFragment = ((GamePlayTutorialFragment) mainActivity.getSupportFragmentManager().findFragmentById(R.id.fragment_container));
         if (gamePlayTutorialFragment.getCurrentHint() instanceof PlayButtonHint) {
             gamePlayTutorialFragment.getCurrentHint().moveToNextHint();
         }
@@ -44,7 +44,7 @@ public class GamePlayTutorialHeaderView extends GamePlayHeaderView {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.pauseButton:
-                ((GamePlayTutorialFragment) mainActivity.getGamePlayFragment()).dismissHint();
+                ((GamePlayTutorialFragment) mainActivity.getSupportFragmentManager().findFragmentById(R.id.fragment_container)).dismissHint();
         }
     }
 

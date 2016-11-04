@@ -64,7 +64,7 @@ public class MissionCompletedDialog extends Dialog implements View.OnClickListen
 
     private void handleHomeButton() {
         HomePageFragement homePageFragement = new HomePageFragement();
-        ((MainActivity) gamePlayFragment.getActivity()).switchFragments(homePageFragement);
+        ((MainActivity) gamePlayFragment.getActivity()).switchFragments(R.id.fragment_container, homePageFragement);
     }
 
     private void handleRestartButton() {
@@ -82,7 +82,7 @@ public class MissionCompletedDialog extends Dialog implements View.OnClickListen
 
     private void handleShop() {
         ShopItemFragment shopItemFragment = new ShopItemFragment();
-        ((MainActivity) gamePlayFragment.getActivity()).switchFragments(shopItemFragment);
+        ((MainActivity) gamePlayFragment.getActivity()).switchFragments(R.id.fragment_container, shopItemFragment);
 
     }
 

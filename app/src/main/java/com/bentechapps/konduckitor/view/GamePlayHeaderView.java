@@ -28,25 +28,25 @@ import java.util.Random;
  */
 public class GamePlayHeaderView extends RelativeLayout implements View.OnClickListener, GameLoopItem {
     protected final MainActivity mainActivity;
-    private final GamePlayFragment gamePlayFragment;
     protected ImageButton pauseButton;
-    private TextView pointsTextView;
     protected TextView playTimeTextView;
     protected TextView healthTextView;
     protected GamePlayHeaderData gamePlayHeaderData;
+    protected ApplicationData appData;
+    private TextView pointsTextView;
     private String gameOverComment[] = {"Game too hard? Adjust difficulty in the settings menu.", "Tip: the quicker you settle the passengers, the higher your score", "Tip: the regenerate power up increases your health.",
             "Never get caught without change. The Split power up splits your largest change for you.", "Doroboss! your eye sharp well well!"};
     private String badComment[] = {"Power ups make you last longer", "The bus driver isn't impressed with your (lack of) skills", "You no sabi this work, we lost money", "We lost money yet again!", "You're fired!!",
             "Passengers in red will deplete your health.", "Learn to collect money from all the passengers before they leave", "Keep trying, you'll get better"};
-    protected ApplicationData appData;
     private ImageView healthTextImage;
     private int resetTime;
     private double updateLength;
+    private GamePlayFragment gamePlayFragment;
 
     public GamePlayHeaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.mainActivity = (MainActivity) context;
-        this.gamePlayFragment = mainActivity.getGamePlayFragment();
+        this.gamePlayFragment = (GamePlayFragment) mainActivity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.game_play_header_view, this, true);
         init();
@@ -90,7 +90,7 @@ public class GamePlayHeaderView extends RelativeLayout implements View.OnClickLi
         gamePlayHeaderData.setPaused(!gamePlayHeaderData.isPaused());
         updatePauseView();
         if (gamePlayHeaderData.isPaused()) {
-            PauseGameDialog pauseGameDialog = new PauseGameDialog(gamePlayFragment.getActivity(), gamePlayFragment.getGamePlayFragmentData().getCurrentMission());
+            PauseGameDialog pauseGameDialog = new PauseGameDialog(mainActivity, gamePlayFragment.getGamePlayFragmentData().getCurrentMission());
             pauseGameDialog.show();
         }
     }
@@ -174,7 +174,7 @@ public class GamePlayHeaderView extends RelativeLayout implements View.OnClickLi
                     saveGameData();
 //                    mainActivity.getGamePlayFragment().getLoop().cancel(true);
 //                    mainActivity.getGamePlayFragment().setLoop(null);
-                    MissionFailedDialog missionFailedDialog = new MissionFailedDialog(mainActivity, mainActivity.getGamePlayFragment());
+                    MissionFailedDialog missionFailedDialog = new MissionFailedDialog(mainActivity, gamePlayFragment);
                     missionFailedDialog.show();
                 }
                 gamePlayHeaderData.setIsSaved(true);
@@ -183,7 +183,7 @@ public class GamePlayHeaderView extends RelativeLayout implements View.OnClickLi
     }
 
     private void saveGameData() {
-        if (mainActivity.getGamePlayFragment().getGamePlayFragmentData().isMissionMode()) {
+        if (gamePlayFragment.getGamePlayFragmentData().isMissionMode()) {
             appData.incrementReputation((int) ((gamePlayHeaderData.getPlayTime() * gamePlayHeaderData.getPoints()) / 400));
         } else {
             appData.incrementReputation((int) ((gamePlayHeaderData.getPlayTime() * gamePlayHeaderData.getPoints()) / 100));
@@ -196,7 +196,7 @@ public class GamePlayHeaderView extends RelativeLayout implements View.OnClickLi
 
     private String getGameOverComment() {
         Random random = new Random();
-        GamePlayFragmentData gamePlayFragmentData = mainActivity.getGamePlayFragment().getGamePlayFragmentData();
+        GamePlayFragmentData gamePlayFragmentData = gamePlayFragment.getGamePlayFragmentData();
         if (gamePlayHeaderData.getPoints() > 1000) {
             return gameOverComment[random.nextInt(gameOverComment.length)];
         } else {
@@ -211,7 +211,7 @@ public class GamePlayHeaderView extends RelativeLayout implements View.OnClickLi
     @Override
     public void doGameUpdates(GamePlayFragment gamePlayFragment, double delta) {
         updateLength += delta * GamePlayFragment.OPTIMAL_TIME;
-        if(updateLength >= 1000000000) {//for each second
+        if (updateLength >= 1000000000) {//for each second
             incrementPlayTime(1);
             gamePlayFragment.getGamePlayFragmentData().getMissionInfoHolder().setGamePlayTime(gamePlayHeaderData.getPlayTime());
             updateLength = 0;

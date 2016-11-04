@@ -66,7 +66,7 @@ public class HeaderControls extends RelativeLayout implements View.OnClickListen
 
     private void handleShop() {
         ShopItemFragment shopItemFragment = new ShopItemFragment();
-        ((MainActivity) getContext()).switchFragmentsAddToBackStack(shopItemFragment);
+        ((MainActivity) getContext()).switchFragmentsAddToBackStack(R.id.fragment_container, shopItemFragment);
     }
 
     private void handleCoin() {

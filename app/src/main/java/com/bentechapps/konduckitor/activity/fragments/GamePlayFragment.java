@@ -30,8 +30,6 @@ import com.bentechapps.konduckitor.view.adapter.PersonTileAdapter;
 import com.bentechapps.konduckitor.view.custom.PauseGameDialog;
 import com.bentechapps.konduckitor.view.custom.StartMissionDialog;
 
-import org.w3c.dom.Text;
-
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -39,6 +37,8 @@ import org.w3c.dom.Text;
  * @see SystemUiHider
  */
 public class GamePlayFragment extends Fragment {
+    public static final int TARGET_FPS = 10;
+    public static final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
     protected GamePlayHeaderView gamePlayHeaderView;
     protected GameLooper loop;
     protected PersonTileAdapter personTileAdapter;
@@ -46,8 +46,19 @@ public class GamePlayFragment extends Fragment {
     protected ApplicationData appData;
     protected GamePlayTailView gamePlayTailView;
     protected GridView gridview;
-    public static final int TARGET_FPS = 10;
-    public static final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+
+    public static void handleRestartAndNextMissionInit(GamePlayFragment gamePlayFragment) {
+        GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData(gamePlayFragment.getActivity());
+        if (gamePlayFragment.getGamePlayFragmentData().isMissionMode()) {
+            gamePlayFragmentData.setCurrentLevel(gamePlayFragment.getGamePlayFragmentData().getCurrentLevel());
+            gamePlayFragmentData.setCurrentMission(gamePlayFragment.getGamePlayFragmentData().getCurrentMission());
+            gamePlayFragmentData.setIsMissionMode(true);
+        }
+        gamePlayFragment.setGamePlayFragmentData(gamePlayFragmentData);
+        if (gamePlayFragmentData.isMissionMode()) {
+            gamePlayFragmentData.setCurrentMission(gamePlayFragment.getGamePlayFragmentData().getCurrentMission().restartMission());
+        }
+    }
 
     public GamePlayFragmentData getGamePlayFragmentData() {
         return gamePlayFragmentData;
@@ -57,7 +68,6 @@ public class GamePlayFragment extends Fragment {
         this.gamePlayFragmentData = gamePlayFragmentData;
         return this;
     }
-
 
     public GameLooper getLoop() {
         if (loop == null)
@@ -69,7 +79,6 @@ public class GamePlayFragment extends Fragment {
         this.loop = loop;
     }
 
-
     public GamePlayTailView getGamePlayTailView() {
         return gamePlayTailView;
     }
@@ -77,7 +86,6 @@ public class GamePlayFragment extends Fragment {
     public void setGamePlayTailView(GamePlayTailView gamePlayTailView) {
         this.gamePlayTailView = gamePlayTailView;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,19 +129,6 @@ public class GamePlayFragment extends Fragment {
         }
     }
 
-    public static void handleRestartAndNextMissionInit(GamePlayFragment gamePlayFragment) {
-        GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData(gamePlayFragment.getActivity());
-        if (gamePlayFragment.getGamePlayFragmentData().isMissionMode()) {
-            gamePlayFragmentData.setCurrentLevel(gamePlayFragment.getGamePlayFragmentData().getCurrentLevel());
-            gamePlayFragmentData.setCurrentMission(gamePlayFragment.getGamePlayFragmentData().getCurrentMission());
-            gamePlayFragmentData.setIsMissionMode(true);
-        }
-        gamePlayFragment.setGamePlayFragmentData(gamePlayFragmentData);
-        if (gamePlayFragmentData.isMissionMode()) {
-            gamePlayFragmentData.setCurrentMission(gamePlayFragment.getGamePlayFragmentData().getCurrentMission().restartMission());
-        }
-    }
-
     protected void init() {
         GamePlayTailData gamePlayTailData = GamePlayTailData.newGamePlayTailData(new DefaultConductorWalletDenomination(getActivity()), 0, ShopItem.list(getActivity()).get(appData.getDefaultPowerUp()));
         gamePlayTailView.setGamePlayTailData(gamePlayTailData);
@@ -170,6 +165,25 @@ public class GamePlayFragment extends Fragment {
 
     public PersonTileAdapter getPersonTileAdapter() {
         return personTileAdapter;
+    }
+
+    public void showGameplayToast(String message, int drawableId) {
+        LayoutInflater inflater = getLayoutInflater(getArguments());
+
+        View customToastroot = inflater.inflate(R.layout.gameplay_toast, null);
+        ((ImageView) customToastroot.findViewById(R.id.image)).setImageDrawable(getResources().getDrawable(drawableId));
+        ((TextView) customToastroot.findViewById(R.id.text)).setText(message);
+
+        Toast customtoast = new Toast(getActivity());
+
+        customtoast.setView(customToastroot);
+        customtoast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 0);
+        customtoast.setDuration(Toast.LENGTH_LONG);
+        customtoast.show();
+    }
+
+    public GridView getGridView() {
+        return gridview;
     }
 
     public class GameLooper extends AsyncTask {
@@ -230,24 +244,5 @@ public class GamePlayFragment extends Fragment {
             return null;
         }
 
-    }
-
-    public void showGameplayToast(String message, int drawableId) {
-        LayoutInflater inflater = getLayoutInflater(getArguments());
-
-        View customToastroot = inflater.inflate(R.layout.gameplay_toast, null);
-        ((ImageView) customToastroot.findViewById(R.id.image)).setImageDrawable(getResources().getDrawable(drawableId));
-        ((TextView) customToastroot.findViewById(R.id.text)).setText(message);
-
-        Toast customtoast = new Toast(getActivity());
-
-        customtoast.setView(customToastroot);
-        customtoast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 0);
-        customtoast.setDuration(Toast.LENGTH_LONG);
-        customtoast.show();
-    }
-
-    public GridView getGridView() {
-        return gridview;
     }
 }

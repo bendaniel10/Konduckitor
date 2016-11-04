@@ -54,8 +54,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
         GamePlayFragment gamePlayFragment =  new GamePlayTutorialFragment();
         GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData(getActivity());
         gamePlayFragment.setGamePlayFragmentData(gamePlayFragmentData);
-        mainActivity.setGamePlayFragment(gamePlayFragment);
 
-        mainActivity.switchFragmentsAddToBackStack(gamePlayFragment);
+        mainActivity.switchFragmentsAddToBackStack(R.id.fragment_container, gamePlayFragment);
     }
 }

@@ -49,7 +49,7 @@ public class GamePlayTailView extends LinearLayout implements View.OnClickListen
     public GamePlayTailView(Context context, AttributeSet attrs) {
         super(context, attrs);
         appData = ApplicationData.getInstance(context);
-        gamePlayFragment = ((MainActivity) context).getGamePlayFragment();
+        gamePlayFragment = (GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.tail_tile, this, true);
         init();

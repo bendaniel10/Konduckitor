@@ -18,7 +18,6 @@ import com.bentechapps.konduckitor.model.mission.Mission;
 import com.bentechapps.konduckitor.model.shop.ShopItem;
 import com.bentechapps.konduckitor.sound.Sound;
 import com.bentechapps.konduckitor.view.adapter.PauseDefaultPowerUpSpinnerAdapter;
-import com.bentechapps.konduckitor.view.adapter.PreferenceSpinnerAdapter;
 import com.bentechapps.konduckitor.view.adapter.StartMissionDialogAdapter;
 
 /**
@@ -81,14 +80,14 @@ public class PauseGameDialog extends Dialog implements View.OnClickListener, Ada
     private void handleRestartButton() {
         //restart fragment hack :-)
         this.dismiss();
-        GamePlayFragment gamePlayFragment = ((MainActivity) context).getGamePlayFragment();
+        GamePlayFragment gamePlayFragment = (GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         GamePlayFragment.handleRestartAndNextMissionInit(gamePlayFragment);
         gamePlayFragment.initializeGame();
     }
 
     private void handleHomeButton() {
         this.dismiss();
-        GamePlayFragment gamePlayFragment = ((MainActivity) context).getGamePlayFragment();
+        GamePlayFragment gamePlayFragment = (GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         gamePlayFragment.getActivity().getSupportFragmentManager().popBackStack();
         gamePlayFragment.getActivity().getSupportFragmentManager().popBackStack();
         gamePlayFragment.getActivity().getSupportFragmentManager().popBackStack();
@@ -96,7 +95,7 @@ public class PauseGameDialog extends Dialog implements View.OnClickListener, Ada
 
     private void handleResumeButton() {
         this.dismiss();
-        ((MainActivity) context).getGamePlayFragment().getGamePlayHeaderView().handlePause();
+        ((GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container)).getGamePlayHeaderView().handlePause();
     }
 
     private void handleSoundButton() {
@@ -130,7 +129,7 @@ public class PauseGameDialog extends Dialog implements View.OnClickListener, Ada
         setCanceledOnTouchOutside(false);
         setCancelable(false);
 
-        if(((MainActivity) context).getGamePlayFragment().getGamePlayFragmentData().isMissionMode()) {
+        if (((GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container)).getGamePlayFragmentData().isMissionMode()) {
             missionList.setAdapter(new StartMissionDialogAdapter(mission, getContext()).setIsShowFullDetail(true));
         }
 
@@ -172,7 +171,7 @@ public class PauseGameDialog extends Dialog implements View.OnClickListener, Ada
     }
 
     private void handlePowerUp() {
-        GamePlayFragment gamePlayFragment = ((MainActivity) context).getGamePlayFragment();
+        GamePlayFragment gamePlayFragment = (GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         appData.setDefaultPowerUp(defaultPowerUp.getSelectedItemPosition());
         gamePlayFragment.getGamePlayTailView().getGamePlayTailData().setDefaultShopItem(ShopItem.list(context).get(defaultPowerUp.getSelectedItemPosition()));
         gamePlayFragment.getGamePlayTailView().updatePowerUpView();

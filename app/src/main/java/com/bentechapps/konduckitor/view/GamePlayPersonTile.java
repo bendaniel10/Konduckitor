@@ -31,23 +31,23 @@ import com.bentechapps.konduckitor.view.animation.AnimationFactory;
 //Honest passenger, when you want to give more than the change. The passenger will inform you.
 public class GamePlayPersonTile extends RelativeLayout implements GameLoopItem {
 
-    private final ProgressBar progress;
     protected final ImageView silohouette;
-    private final TextView amountWith;
-    private final TextView amountToPay;
     protected final GamePlayFragment gamePlayFragment;
     protected final ApplicationData appData;
+    private final ProgressBar progress;
+    private final TextView amountWith;
+    private final TextView amountToPay;
     private final LinearLayout amountHolder;
-    private boolean isListenerSet = false;
-    private GamePlayPersonTileData gamePlayPersonTileData;
     public boolean isSettledRecorded;
     public boolean isAngerRecorded;
+    private boolean isListenerSet = false;
+    private GamePlayPersonTileData gamePlayPersonTileData;
     private short resetTime;
     private double updateLength;
 
     public GamePlayPersonTile(Context context, AttributeSet attrs) {
         super(context, attrs);
-        gamePlayFragment = ((MainActivity) context).getGamePlayFragment();
+        gamePlayFragment = (GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.user_tile, this, true);
         progress = (ProgressBar) findViewById(R.id.timeLeftBar);
@@ -219,12 +219,14 @@ public class GamePlayPersonTile extends RelativeLayout implements GameLoopItem {
 
         });
     }
+
     private void recordAngerForMission() {
         if (isAngerRecorded) {
             gamePlayFragment.getGamePlayFragmentData().getMissionInfoHolder().decrementNumberOfAngryPassengers(1);
             isAngerRecorded = false;
         }
     }
+
     private void updateProgressBar() {
         progress.post(new Runnable() {
             public final String TAG = this.getClass().getSimpleName();

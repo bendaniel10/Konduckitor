@@ -1,16 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <!-- extend one of the Theme.AppCompat themes -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- customize the color palette -->
+        <item name="colorPrimary">@color/app_color_primary</item>
+        <item name="colorPrimaryDark">@color/app_color_dark</item>
+        <item name="colorAccent">@color/app_color_accent</item>
+        <item name="colorButtonNormal">@color/app_button_color</item>
+        <item name="buttonStyle">@style/AppButton</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:editTextStyle">@style/AppEditText</item>
+        <item name="android:textViewStyle">@style/AppTextView</item>
+        <item name="spinnerStyle">@style/AppSpinner</item>x
+        <item name="android:spinnerItemStyle">@style/SpinnerItemStyle</item>
+        <item name="imageButtonStyle">@style/AppImageButton</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!--<item name="android:textColorHint">@color/text_color_hint</item>-->
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@null</item>
-        <item name="metaButtonBarStyle">@style/ButtonBar</item>
-        <item name="metaButtonBarButtonStyle">@style/ButtonBarButton</item>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="SpinnerItemStyle" parent="Base.TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
+        <item name="android:textSize">@dimen/spinner_item_size</item>
+        <item name="fontPath">fonts/SF_Atarian_System.ttf</item>
+    </style>
+
+
+    <style name="AppEditText" parent="android:Widget.EditText">
+        <!--<item name="android:background">@color/white</item>-->
+        <item name="android:textColor">@color/edit_text_color</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+
+    <style name="AppTextView" parent="Base.Widget.AppCompat.TextView.SpinnerItem">
+        <item name="fontPath">fonts/SF_Atarian_System.ttf</item>
+        <item name="android:textSize">@dimen/body_text_size</item>
+        <item name="android:textColor">@color/text_body</item>
+    </style>
+
+    <style name="AppSpinner" parent="Widget.AppCompat.Spinner.Underlined">
+        <item name="android:popupBackground">@color/spinner_popup_background</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="AppButton" parent="Base.Widget.AppCompat.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="fontPath">fonts/SF_Atarian_System_Bold.ttf</item>
+        <item name="android:textSize">@dimen/body_text_size</item>
+    </style>
+
+    <style name="LinkButton" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name="fontPath">fonts/SF_Atarian_System_Bold.ttf</item>
+        <item name="android:textColor">@color/link_button</item>
+        <item name="android:textSize">@dimen/body_text_size</item>
+        <!--<item name="android:shadowColor">@color/text_view_outline</item>-->
+        <!--<item name="android:shadowDx">@dimen/textview_shadow_dx</item>-->
+        <!--<item name="android:shadowDy">@dimen/textview_shadow_dy</item>-->
+        <!--<item name="android:shadowRadius">@dimen/textview_shadow_radius</item>-->
+    </style>
+
+
+    <style name="HintLinkButton" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name="fontPath">fonts/SF_Atarian_System.ttf</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:textColor">@color/hint_link_button</item>
+        <item name="android:textSize">@dimen/hint_link_text_size</item>
+        <item name="android:textAllCaps">false</item>
+        <!--<item name="android:shadowColor">@color/text_view_outline</item>-->
+        <!--<item name="android:shadowDx">@dimen/textview_shadow_dx</item>-->
+        <!--<item name="android:shadowDy">@dimen/textview_shadow_dy</item>-->
+        <!--<item name="android:shadowRadius">@dimen/textview_shadow_radius</item>-->
+    </style>
+
+    <style name="AppImageButton" parent="Base.Widget.AppCompat.ImageButton">
+        <item name="background">@android:color/transparent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="Container">
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/container_padding</item>
+    </style>
+
+    <style name="Dashboard" />
+
+    <style name="Dashboard.Title">
+        <item name="android:textSize">@dimen/dashboard_title_text_size</item>
+        <item name="android:textColor">@color/dashboard_title</item>
+        <item name="fontPath">fonts/SF_Atarian_System_Bold.ttf</item>
+    </style>
+
+    <style name="Dashboard.Text">
+        <item name="android:textSize">@dimen/dashboard_text_text_size</item>
+        <item name="android:textColor">@color/dashboard_text</item>
+        <item name="fontPath">fonts/SF_Atarian_System.ttf</item>
+    </style>
+
+    <style name="Table" />
+
+    <style name="Table.Title">
+        <item name="android:gravity">start</item>
+        <item name="android:textSize">@dimen/table_title_text_size</item>
+        <item name="android:textColor">@color/table_title</item>
+        <item name="fontPath">fonts/SF_Atarian_System_Bold.ttf</item>
+    </style>
+
+    <style name="Table.Text">
+        <item name="android:gravity">start</item>
+        <item name="android:textSize">@dimen/table_text_text_size</item>
+        <item name="android:textColor">@color/table_text</item>
+        <item name="fontPath">fonts/SF_Atarian_System_Bold.ttf</item>
+    </style>
+
+    <style name="IntroScreen" />
+
+    <style name="IntroScreen.Button" parent="LinkButton"></style>
+
+    <style name="Notification" />
+
+    <style name="Notification.Change">
+        <item name="fontPath">fonts/SF_Atarian_System.ttf</item>
+        <item name="android:textColor">@color/app_color_accent</item>
+        <item name="android:textSize">@dimen/notification_change_font_size</item>
+    </style>
+
+    <style name="Settings" />
+
+    <style name="Settings.Title">
+        <item name="fontPath">fonts/SF_Atarian_System_Bold.ttf</item>
+        <item name="android:textColor">@color/settings_title_text_color</item>
+        <item name="android:textSize">@dimen/settings_title_text_size</item>
+    </style>
+
+    <style name="Settings.Category">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textColor">@color/settings_category_text_color</item>
+        <item name="android:textSize">@dimen/settings_category_text_size</item>
+        <item name="android:paddingTop">@dimen/list_item_padding</item>
+        <item name="android:paddingBottom">@dimen/list_item_padding</item>
+    </style>
+
+    <style name="Text" />
+
+    <style name="Text.Bold">
+        <item name="android:textSize">@dimen/body_text_size</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontPath">fonts/SF_Atarian_System_Bold.ttf</item>
+    </style>
+
+
+    <style name="Text.Title">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/headline_text_size</item>
+        <item name="android:textColor">@color/text_title</item>
+        <item name="fontPath">fonts/SF_Atarian_System_Bold.ttf</item>
+    </style>
+
+    <style name="Text.Hint">
+        <item name="android:textSize">@dimen/body_text_size</item>
+        <item name="android:textColor">@color/text_hint</item>
+        <item name="fontPath">fonts/SF_Atarian_System.ttf</item>
+    </style>
+
+    <style name="primaryAccountLabel">
+        <item name="android:textColor">@color/primary_account_label_text_code</item>
+        <item name="android:paddingLeft">@dimen/primary_account_label_padding</item>
+        <item name="android:paddingTop">@dimen/primary_account_label_padding</item>
+        <item name="android:paddingBottom">@dimen/primary_account_label_padding</item>
+        <item name="android:paddingRight">@dimen/primary_account_label_padding</item>
+        <item name="android:background">@color/primary_account_label_background</item>
+    </style>
+
+
+    <style name="editTextStyle">
+        <item name="android:textSize">@dimen/edit_text_size</item>
+    </style>
+
+
+    <style name="menu_labels_style">
+        <item name="android:textColor">@color/fab_text_color</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/fab_text_size</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="fontPath">fonts/SF_Atarian_System.ttf</item>
+    </style>
+
+    <style name="ConfirmDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowTitleStyle">@style/ConfirmDialogTextStyle</item>
+    </style>
+
+    <style name="ConfirmDialogTextStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
     </style>
 
     <style name="CustomProgressBarHorizontal" parent="android:Widget.ProgressBar.Horizontal">

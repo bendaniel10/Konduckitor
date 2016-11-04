@@ -60,9 +60,8 @@ public class MissionItem extends RelativeLayout implements View.OnClickListener 
             gamePlayFragment.getGamePlayFragmentData().setIsMissionMode(true);
             gamePlayFragment.getGamePlayFragmentData().setCurrentMission(mission);
             gamePlayFragment.getGamePlayFragmentData().setCurrentLevel(level);
-            mainActivity.setGamePlayFragment(gamePlayFragment);
 
-            mainActivity.switchFragmentsAddToBackStack(gamePlayFragment);
+            mainActivity.switchFragmentsAddToBackStack(R.id.fragment_container, gamePlayFragment);
         }
     }
 

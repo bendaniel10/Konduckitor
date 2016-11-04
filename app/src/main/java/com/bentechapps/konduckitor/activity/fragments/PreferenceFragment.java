@@ -134,7 +134,7 @@ public class PreferenceFragment extends Fragment implements View.OnClickListener
     }
 
     private void handleCredits() {
-        ((MainActivity) getActivity()).switchFragmentsAddToBackStack(new CreditsFragment());
+        ((MainActivity) getActivity()).switchFragmentsAddToBackStack(R.id.fragment_container, new CreditsFragment());
     }
 
     @Override

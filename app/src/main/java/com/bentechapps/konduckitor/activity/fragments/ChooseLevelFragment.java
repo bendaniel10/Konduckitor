@@ -49,7 +49,7 @@ public class ChooseLevelFragment extends ListFragment {
         if(ApplicationData.getInstance(getActivity()).getCurrentLevel() < level.getLevel()) {
                 v.findViewById(R.id.locked_image).startAnimation(AnimationFactory.newWobbleAnimation());
         } else {
-            ((MainActivity) getActivity()).switchFragmentsAddToBackStack(new ChooseMissionFragment().setLevel(level));
+            ((MainActivity) getActivity()).switchFragmentsAddToBackStack(R.id.fragment_container, new ChooseMissionFragment().setLevel(level));
         }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Conductor</string>
+    <string name="app_name">Conductor 3</string>
     <string name="play">PLAY</string>
     <string name="play_tutorial">PLAY TUTORIAL</string>
     <string name="title_activity_game_play">Conductor</string>
@@ -60,4 +60,8 @@
     <string name="quick_play">QUICK PLAY</string>
     <string name="mission">MISSION</string>
     <string name="settings">SETTINGS</string>
+    <string name="progress_will_not_be_saved_continue_exit">Progress will not be saved, continue?</string>
+    <string name="confirm_exit">Confirm exit</string>
+    <string name="go_home">Continue to home</string>
+    <string name="stay_in_game">Stay in game</string>
 </resources>

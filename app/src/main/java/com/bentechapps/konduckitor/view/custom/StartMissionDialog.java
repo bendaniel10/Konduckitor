@@ -5,20 +5,20 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.MainActivity;
+import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
 import com.bentechapps.konduckitor.model.mission.Mission;
 import com.bentechapps.konduckitor.view.adapter.StartMissionDialogAdapter;
 
 /**
  * Created by Daniel on 5/14/2015.
  */
-public class StartMissionDialog extends Dialog implements View.OnClickListener{
+public class StartMissionDialog extends Dialog implements View.OnClickListener {
     private final Mission mission;
     private final Context context;
     private ImageButton okButton;
@@ -36,11 +36,10 @@ public class StartMissionDialog extends Dialog implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.ok_button:
                 this.dismiss();
-                ((MainActivity) context).getGamePlayFragment().getGamePlayHeaderView().handlePause();
+                ((GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container)).getGamePlayHeaderView().handlePause();
                 break;
         }
     }
-
 
 
     @Override
