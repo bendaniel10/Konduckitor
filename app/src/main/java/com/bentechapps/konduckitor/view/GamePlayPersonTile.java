@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bentech.android.appcommons.utils.DrawableUtils;
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.MainActivity;
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
@@ -25,38 +28,41 @@ import com.bentechapps.konduckitor.model.person.Sex;
 import com.bentechapps.konduckitor.sound.Sound;
 import com.bentechapps.konduckitor.view.animation.AnimationFactory;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by BenTech on 1/31/2015.
  */
 //Honest passenger, when you want to give more than the change. The passenger will inform you.
 public class GamePlayPersonTile extends RelativeLayout implements GameLoopItem {
 
-    protected final ImageView silohouette;
     protected final GamePlayFragment gamePlayFragment;
     protected final ApplicationData appData;
-    private final ProgressBar progress;
-    private final TextView amountWith;
-    private final TextView amountToPay;
-    private final LinearLayout amountHolder;
+    @BindView(R.id.amountHolder)
+    LinearLayout amountHolder;
     public boolean isSettledRecorded;
     public boolean isAngerRecorded;
-    private boolean isListenerSet = false;
+    @BindView(R.id.imageButton)
+    ImageView silohouette;
+    @BindView(R.id.timeLeftBar)
+    ProgressBar timeLeftBar;
+    @BindView(R.id.amountWith)
+    TextView amountWith;
+    @BindView(R.id.amountToPay)
+    TextView amountToPay;
     private GamePlayPersonTileData gamePlayPersonTileData;
-    private short resetTime;
     private double updateLength;
 
     public GamePlayPersonTile(Context context, AttributeSet attrs) {
         super(context, attrs);
-        gamePlayFragment = (GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.user_tile, this, true);
-        progress = (ProgressBar) findViewById(R.id.timeLeftBar);
-        silohouette = (ImageView) findViewById(R.id.imageButton);
-        amountWith = (TextView) findViewById(R.id.amountWith);
-        amountToPay = (TextView) findViewById(R.id.amountToPay);
-        this.appData = ApplicationData.getInstance(context);
-        this.amountHolder = (LinearLayout) findViewById(R.id.amountHolder);
+        ButterKnife.bind(this, this);
 
+        gamePlayFragment = (GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+        this.appData = ApplicationData.getInstance(context);
     }
 
     public GamePlayPersonTileData getGamePlayPersonTileData() {
@@ -65,7 +71,7 @@ public class GamePlayPersonTile extends RelativeLayout implements GameLoopItem {
 
     public void setGamePlayPersonTileData(GamePlayPersonTileData gamePlayPersonTileData) {
         this.gamePlayPersonTileData = gamePlayPersonTileData;
-        progress.setMax(this.gamePlayPersonTileData.getExitTime());
+        timeLeftBar.setMax(this.gamePlayPersonTileData.getExitTime());
         silohouette.setImageDrawable(this.gamePlayPersonTileData.getPerson().getImage());
         amountToPay.setText(Short.toString(this.gamePlayPersonTileData.getAmountToPay().getValue()));
         amountWith.setText(String.format("%s%s", "+", Short.toString(this.gamePlayPersonTileData.getAmountWith().getValue())));
@@ -168,49 +174,60 @@ public class GamePlayPersonTile extends RelativeLayout implements GameLoopItem {
 
             @Override
             public void run() {
-                if (gamePlayPersonTileData.getAmountToPay().getValue() == 0 && gamePlayPersonTileData.getAmountWith().getValue() >= 0) {
-                    GamePlayPersonTile.this.silohouette.setImageDrawable(gamePlayPersonTileData.getPerson().getImage());
-                    if (android.os.Build.VERSION.SDK_INT >= 16) {
-                        GamePlayPersonTile.this.amountHolder.setBackground(getResources().getDrawable(R.color.light_blue));
-                    } else {
-                        GamePlayPersonTile.this.amountHolder.setBackgroundDrawable(getResources().getDrawable(R.color.light_blue));
-                    }
+                if (isChangeSettled()) {
+                    silohouette.setImageDrawable(gamePlayPersonTileData.getPerson().getImage());
+                    DrawableUtils.setBackgroundDrawable(
+                            amountHolder,
+                            new ColorDrawable(ContextCompat.getColor(getContext(), R.color.light_blue))
+                    );
                     recordAngerForMission();
-                } else if ((float) gamePlayPersonTileData.getTimeLeft() > (float) gamePlayPersonTileData.getExitTime() * (2f / 3f)) {
+                } else if (isGreaterTimeRemaining()) {
                     if (isConductorOwingChange()) {
-                        GamePlayPersonTile.this.silohouette.setImageDrawable(gamePlayPersonTileData.getPerson().getImage());
+                        silohouette.setImageDrawable(gamePlayPersonTileData.getPerson().getImage());
                     }
-                    if (android.os.Build.VERSION.SDK_INT >= 16) {
-                        GamePlayPersonTile.this.amountHolder.setBackground(getResources().getDrawable(R.color.light_green));
-                    } else {
-                        GamePlayPersonTile.this.amountHolder.setBackgroundDrawable(getResources().getDrawable(R.color.light_green));
-                    }
+                    silohouette.setImageDrawable(gamePlayPersonTileData.getPerson().getImage());
+                    DrawableUtils.setBackgroundDrawable(
+                            amountHolder,
+                            new ColorDrawable(ContextCompat.getColor(getContext(), R.color.light_green))
+                    );
                     recordAngerForMission();
-                } else if ((float) gamePlayPersonTileData.getTimeLeft() > (float) gamePlayPersonTileData.getExitTime() * (1f / 3f)) {
+                } else if (isSmallerTimeRemaining()) {
                     if (isConductorOwingChange()) {
-                        GamePlayPersonTile.this.silohouette.setImageDrawable(gamePlayPersonTileData.getPerson().getImageImpatient());
+                        silohouette.setImageDrawable(gamePlayPersonTileData.getPerson().getImageImpatient());
                     }
-                    if (android.os.Build.VERSION.SDK_INT >= 16) {
-                        GamePlayPersonTile.this.amountHolder.setBackground(getResources().getDrawable(R.color.light_yellow));
-                    } else {
-                        GamePlayPersonTile.this.amountHolder.setBackgroundDrawable(getResources().getDrawable(R.color.light_yellow));
-                    }
+                    silohouette.setImageDrawable(gamePlayPersonTileData.getPerson().getImage());
+                    DrawableUtils.setBackgroundDrawable(
+                            amountHolder,
+                            new ColorDrawable(ContextCompat.getColor(getContext(), R.color.light_yellow))
+                    );
                     recordAngerForMission();
                 } else {
                     if (isConductorOwingChange()) {
-                        GamePlayPersonTile.this.silohouette.setImageDrawable(gamePlayPersonTileData.getPerson().getImageAngry());
+                        silohouette.setImageDrawable(gamePlayPersonTileData.getPerson().getImageAngry());
                         if (!isAngerRecorded) {
                             silohouette.startAnimation(AnimationFactory.newWobbleAnimation());
                             gamePlayFragment.getGamePlayFragmentData().getMissionInfoHolder().incrementNumberOfAngryPassengers(1);
                             isAngerRecorded = true;
                         }
                     }
-                    if (android.os.Build.VERSION.SDK_INT >= 16) {
-                        GamePlayPersonTile.this.amountHolder.setBackground(getResources().getDrawable(R.color.light_red));
-                    } else {
-                        GamePlayPersonTile.this.amountHolder.setBackgroundDrawable(getResources().getDrawable(R.color.light_red));
-                    }
+                    silohouette.setImageDrawable(gamePlayPersonTileData.getPerson().getImage());
+                    DrawableUtils.setBackgroundDrawable(
+                            amountHolder,
+                            new ColorDrawable(ContextCompat.getColor(getContext(), R.color.light_red))
+                    );
                 }
+            }
+
+            private boolean isSmallerTimeRemaining() {
+                return (float) gamePlayPersonTileData.getTimeLeft() > (float) gamePlayPersonTileData.getExitTime() * (1f / 3f);
+            }
+
+            private boolean isGreaterTimeRemaining() {
+                return (float) gamePlayPersonTileData.getTimeLeft() > (float) gamePlayPersonTileData.getExitTime() * (2f / 3f);
+            }
+
+            private boolean isChangeSettled() {
+                return gamePlayPersonTileData.getAmountToPay().getValue() == 0 && gamePlayPersonTileData.getAmountWith().getValue() >= 0;
             }
 
             private boolean isConductorOwingChange() {
@@ -228,18 +245,18 @@ public class GamePlayPersonTile extends RelativeLayout implements GameLoopItem {
     }
 
     private void updateProgressBar() {
-        progress.post(new Runnable() {
+        timeLeftBar.post(new Runnable() {
             public final String TAG = this.getClass().getSimpleName();
 
             @Override
             public void run() {
-                progress.setProgress(gamePlayPersonTileData.getTimeLeft());
-                if ((float) progress.getProgress() > (float) gamePlayPersonTileData.getExitTime() * (2f / 3f)) {
-                    progress.getProgressDrawable().setColorFilter(getResources().getColor(R.color.light_green), PorterDuff.Mode.MULTIPLY);
-                } else if ((float) progress.getProgress() > (float) gamePlayPersonTileData.getExitTime() * (1f / 3f)) {
-                    progress.getProgressDrawable().setColorFilter(getResources().getColor(R.color.light_yellow), PorterDuff.Mode.MULTIPLY);
+                timeLeftBar.setProgress(gamePlayPersonTileData.getTimeLeft());
+                if ((float) timeLeftBar.getProgress() > (float) gamePlayPersonTileData.getExitTime() * (2f / 3f)) {
+                    timeLeftBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.light_green), PorterDuff.Mode.MULTIPLY);
+                } else if ((float) timeLeftBar.getProgress() > (float) gamePlayPersonTileData.getExitTime() * (1f / 3f)) {
+                    timeLeftBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.light_yellow), PorterDuff.Mode.MULTIPLY);
                 } else {
-                    progress.getProgressDrawable().setColorFilter(getResources().getColor(R.color.light_red), PorterDuff.Mode.MULTIPLY);
+                    timeLeftBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.light_red), PorterDuff.Mode.MULTIPLY);
                 }
             }
         });
