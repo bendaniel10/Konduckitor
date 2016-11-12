@@ -8,18 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.bentech.android.appcommons.fragment.AppCommonsFragment;
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.model.level.Level;
 import com.bentechapps.konduckitor.view.adapter.ChooseMissionAdapter;
-import com.bentechapps.konduckitor.view.custom.HeaderControls;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChooseMissionFragment extends Fragment {
+public class ChooseMissionFragment extends AppCommonsFragment {
 
 
-    private GridView gridview;
+    private static final String LEVEL_OBJECT = "LEVEL_OBJECT";
+    @BindView(R.id.gridview)
+    GridView gridview;
     private Level level;
 
     public ChooseMissionFragment() {
@@ -27,23 +32,28 @@ public class ChooseMissionFragment extends Fragment {
     }
 
 
+    public static ChooseMissionFragment newInstance(Level level) {
+
+        Bundle args = new Bundle();
+        args.putSerializable(LEVEL_OBJECT, level);
+
+        ChooseMissionFragment fragment = new ChooseMissionFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_choose_mission, container, false);
-    }
+        View rootView = inflater.inflate(R.layout.fragment_choose_mission, container, false);
+        ButterKnife.bind(this, rootView);
 
-    public ChooseMissionFragment setLevel(Level level) {
-        this.level = level;
-        return this;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ((HeaderControls)getView().findViewById(R.id.header_controls)).setFragmentManager(getFragmentManager()).setTitle(level.getName());
-        gridview = (GridView) getView().findViewById(R.id.gridview);
+        Level level = (Level) getArguments().getSerializable(LEVEL_OBJECT);
         gridview.setAdapter(new ChooseMissionAdapter(getActivity(), level));
+
+        return rootView;
     }
+
 }

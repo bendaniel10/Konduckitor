@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.bentechapps.konduckitor.model.level.Level;
+import com.bentechapps.konduckitor.model.level.LevelFactory;
 import com.bentechapps.konduckitor.view.custom.LevelItem;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by Daniel on 5/10/2015.
  */
+@Deprecated
 public class ChooseLevelAdapter extends BaseAdapter {
 
     private Context context;
@@ -24,7 +26,7 @@ public class ChooseLevelAdapter extends BaseAdapter {
     }
 
     private void initLevelItems() {
-        levelList = Level.list();
+        levelList = LevelFactory.listLevels();
     }
 
     @Override

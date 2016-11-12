@@ -15,6 +15,7 @@ import com.bentechapps.konduckitor.model.level.Level;
 /**
  * Created by Daniel on 5/10/2015.
  */
+@Deprecated
 public class LevelItem extends RelativeLayout {
 
     private final ImageView levelImage;

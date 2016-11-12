@@ -4,14 +4,6 @@
     android:background="@color/light_yellow"
     tools:context="com.bentechapps.konduckitor.activity.fragments.ChooseMissionFragment">
 
-    <com.bentechapps.konduckitor.view.custom.HeaderControls
-        android:id="@+id/header_controls"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"

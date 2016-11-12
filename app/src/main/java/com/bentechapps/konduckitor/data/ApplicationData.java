@@ -6,6 +6,7 @@ import android.media.AudioManager;
 
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
 import com.bentechapps.konduckitor.model.level.Level;
+import com.bentechapps.konduckitor.model.level.LevelFactory;
 
 /**
  * Created by BenTech on 2/9/2015.
@@ -97,7 +98,7 @@ public class ApplicationData {
         int currentMission = gamePlayFragment.getGamePlayFragmentData().getCurrentMission().getMission();//the mission that was curretnly played
         int currentLevel = gamePlayFragment.getGamePlayFragmentData().getCurrentLevel().getLevel();//the level that was currently played
         int levelMissionsSize = Level.getLevel(gamePlayFragment).listMission(new GamePlayFragment().setGamePlayFragmentData(new GamePlayFragmentData(context))).size();//find a better way to access this.
-        int levelSize = Level.list().size();
+        int levelSize = LevelFactory.listLevels().size();
         if (currentMission == levelMissionsSize) {//is this the last mission for that level?
             if (currentLevel == getCurrentLevel() && levelSize > getCurrentLevel()) {//check to prevent incrementing past defined levels.
                 setCurrentLevel(getCurrentLevel() + 1);
@@ -116,7 +117,7 @@ public class ApplicationData {
         }
 
         if(getCurrentMission() == 1 && getCurrentLevel() > 1) {//for last mission for a level: go back to max mission, previous level;
-            setCurrentMission(Level.list().get(getCurrentLevel() - 2).listMission(new GamePlayFragment().setGamePlayFragmentData(new GamePlayFragmentData(context))).size());//find a better way to access this.);
+            setCurrentMission(LevelFactory.listLevels().get(getCurrentLevel() - 2).listMission(new GamePlayFragment().setGamePlayFragmentData(new GamePlayFragmentData(context))).size());//find a better way to access this.);
             setCurrentLevel(getCurrentLevel() - 1);
         }
     }

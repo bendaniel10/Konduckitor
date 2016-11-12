@@ -64,4 +64,12 @@
     <string name="confirm_exit">Confirm exit</string>
     <string name="go_home">Continue to home</string>
     <string name="stay_in_game">Stay in game</string>
+    <string name="level_one_description">This is Lekki, things aren\'t as tough as they ought to be. You\'ll encounter a lot of soft mission here.</string>
+    <string name="level_one_name">Lekki</string>
+    <string name="level_two_name">Victoria Island</string>
+    <string name="level_two_description">VI isn\'t as easy as Lekki, but it\'s not the toughest too. Missions are tougher now.</string>
+    <string name="level_three_description">CMS is tough, that is what I can tell you. You need to be a real \'agbero\' to scale through</string>
+    <string name="level_three_name">CMS</string>
+    <string name="level_four_description">If you thought that you\'ve seen tough, you must be joking. Welcome to Ikeja, only those from the streets can scale through.</string>
+    <string name="level_four_name">Ikeja</string>
 </resources>

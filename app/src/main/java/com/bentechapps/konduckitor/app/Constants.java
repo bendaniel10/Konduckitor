@@ -7,4 +7,5 @@ package com.bentechapps.konduckitor.app;
 public final class Constants {
     public static final String CURRENCY_SYMBOL = "₦";
 
+    public static final int MAX_LEVEL = 4;
 }

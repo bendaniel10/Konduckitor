@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bentech.android.appcommons.activity.AppCommonsActivity;
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.MainActivity;
 import com.bentechapps.konduckitor.activity.fragments.ShopItemFragment;
@@ -39,10 +40,6 @@ public class HeaderControls extends RelativeLayout implements View.OnClickListen
 
     }
 
-    public HeaderControls setFragmentManager(FragmentManager fragmentManager) {
-        this.fragmentManager = fragmentManager;
-        return this;
-    }
 
     public HeaderControls setTitle(String title) {
         this.title.setText(title);
@@ -74,6 +71,6 @@ public class HeaderControls extends RelativeLayout implements View.OnClickListen
     }
 
     private void handlePrevious() {
-        fragmentManager.popBackStack();
+        ((AppCommonsActivity) getContext()).onBackPressed();
     }
 }
