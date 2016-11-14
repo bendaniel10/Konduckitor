@@ -28,6 +28,10 @@ public class ChooseLevelViewPagerAdapter extends FragmentPagerAdapter {
         return ChooseMissionFragment.newInstance(levelsList.get(position));
     }
 
+    public Level getLevel(int position) {
+        return levelsList.get(position);
+    }
+
     @Override
     public int getCount() {
         return levelsList.size();

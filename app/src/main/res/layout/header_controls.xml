@@ -1,58 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/light_yellow"
-    android:padding="3dp"
-    android:layout_height="wrap_content">
+    android:orientation="vertical">
 
     <ImageButton
-        android:background="@drawable/app_button"
-        android:scaleType="centerInside"
-        android:src="@drawable/previous"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
         android:id="@+id/previous_button"
-        android:layout_alignParentTop="true"
+        android:layout_width="@dimen/touch_target_size"
+        android:layout_height="@dimen/touch_target_size"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/app_button"
+        android:scaleType="centerInside"
+        android:src="@drawable/previous" />
 
     <ImageButton
-        android:background="@drawable/app_button"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:text="SHOP"
-        android:scaleType="centerInside"
-        android:src="@drawable/shop"
         android:id="@+id/shop_button"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_width="@dimen/touch_target_size"
+        android:layout_height="@dimen/touch_target_size"
         android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/coin_button" />
-
-    <Button
-        android:background="@drawable/app_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2000"
-        android:visibility="gone"
-        android:layout_marginRight="2dp"
-        android:textColor="@color/white"
-        android:id="@+id/coin_button"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/shop_button"
-        android:layout_toStartOf="@+id/shop_button"
-        android:layout_alignBottom="@+id/previous_button" />
+        android:background="@drawable/app_button"
+        android:scaleType="centerInside"
+        android:src="@drawable/shop" />
 
     <TextView
+        android:id="@+id/titleTxt"
+        style="@style/Text.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/previous_button"
         android:layout_alignBottom="@+id/previous_button"
-        android:layout_toLeftOf="@+id/coin_button"
-        android:layout_toStartOf="@+id/coin_button" />
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/content_spacing"
+        android:layout_marginLeft="@dimen/content_spacing"
+        android:layout_marginRight="@dimen/content_spacing"
+        android:layout_marginStart="@dimen/content_spacing"
+        android:layout_toEndOf="@id/previous_button"
+        android:layout_toLeftOf="@+id/shop_button"
+        android:layout_toRightOf="@+id/previous_button"
+        android:layout_toStartOf="@+id/shop_button"
+        android:gravity="center"
+        android:text="Title" />
+
+    <TextView
+        android:id="@+id/subTitleTxt"
+        style="@style/ListItemSecondaryText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/previous_button"
+        android:layout_marginTop="@dimen/content_spacing"
+        android:gravity="center_horizontal"
+        android:text="Explains what more on what the title is" />
 </RelativeLayout>

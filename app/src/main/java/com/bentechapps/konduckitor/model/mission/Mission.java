@@ -1,7 +1,5 @@
 package com.bentechapps.konduckitor.model.mission;
 
-import android.widget.Toast;
-
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
 import com.bentechapps.konduckitor.data.ApplicationData;
 import com.bentechapps.konduckitor.data.GamePlayFragmentData;
@@ -20,38 +18,12 @@ import java.util.List;
  */
 public abstract class Mission implements GameLoopItem {
 
-    protected int MAX_LEVEL = 4;
-    protected final GamePlayFragment gamePlayFragment;
-    protected final int level;
-    protected MissionInfoHolder missionInfoHolder;
-    protected List<SubMission> subMissionList = new ArrayList<>();
+    private final Level level;
+    private List<SubMission> subMissionList = new ArrayList<>();
 
-    public Mission(GamePlayFragment gamePlayFragment, int level) {
+
+    public Mission(Level level) {
         this.level = level;
-        this.gamePlayFragment = gamePlayFragment;
-        this.missionInfoHolder = gamePlayFragment == null ? null : gamePlayFragment.getGamePlayFragmentData().getMissionInfoHolder();
-    }
-
-    public Mission restartMission() {
-        missionInfoHolder = gamePlayFragment.getGamePlayFragmentData().getMissionInfoHolder();
-        for (SubMission subMission : subMissionList) {
-            subMission.restartSubMission();
-        }
-        return this;
-    }
-
-    public GamePlayFragment getGamePlayFragment() {
-        return gamePlayFragment;
-    }
-
-    public abstract int getMission();
-
-    public void addSubMission(SubMission subMission) {
-        subMissionList.add(subMission);
-    }
-
-    public List<SubMission> listMissions() {
-        return subMissionList;
     }
 
     /**
@@ -63,6 +35,27 @@ public abstract class Mission implements GameLoopItem {
         ApplicationData applicationData = ApplicationData.getInstance(gamePlayFragment.getActivity());
         int missionNumber = applicationData.getCurrentMission();
         return Level.getLevel(gamePlayFragment).listMission(gamePlayFragment).get(missionNumber - 1);
+    }
+
+    public Mission restartMission() {
+        for (SubMission subMission : subMissionList) {
+            subMission.restartSubMission();
+        }
+        return this;
+    }
+
+    public abstract int getMission();
+
+    public void addSubMission(SubMission subMission) {
+        subMissionList.add(subMission);
+    }
+
+    void addSubMissions(List<SubMission> subMissions) {
+        subMissionList.addAll(subMissions);
+    }
+
+    public List<SubMission> listMissions() {
+        return subMissionList;
     }
 
     public boolean isMissionComplete() {

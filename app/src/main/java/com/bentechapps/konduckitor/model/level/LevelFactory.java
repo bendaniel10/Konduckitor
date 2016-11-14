@@ -1,6 +1,5 @@
 package com.bentechapps.konduckitor.model.level;
 
-import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 
@@ -8,6 +7,7 @@ import com.bentech.android.appcommons.AppCommons;
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.app.Constants;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +19,17 @@ public class LevelFactory {
 
 
     private static ArrayList<Level> levels;
+    private static LevelBuilder levelBuilder;
 
-    public static LevelBuilder builder() {
-        return new LevelBuilder();
+    private static synchronized LevelBuilder builder() {
+        if (levelBuilder == null) {
+            return new LevelBuilder();
+        }
+        return levelBuilder;
+    }
+
+    private static void recycleBuilder() {
+        levelBuilder = new LevelBuilder();
     }
 
 
@@ -42,6 +50,7 @@ public class LevelFactory {
 
         levels.add(levelBuilder.build());
 
+        recycleBuilder();
         levelBuilder.withDescription(R.string.level_two_description)
                 .withName(R.string.level_two_name)
                 .withLevel(2)
@@ -49,6 +58,7 @@ public class LevelFactory {
 
         levels.add(levelBuilder.build());
 
+        recycleBuilder();
         levelBuilder.withDescription(R.string.level_three_description)
                 .withName(R.string.level_three_name)
                 .withLevel(3)
@@ -56,6 +66,7 @@ public class LevelFactory {
 
         levels.add(levelBuilder.build());
 
+        recycleBuilder();
         levelBuilder.withDescription(R.string.level_four_description)
                 .withName(R.string.level_four_name)
                 .withLevel(4)
@@ -66,7 +77,7 @@ public class LevelFactory {
         return levels;
     }
 
-    private static class LevelBuilder {
+    private static class LevelBuilder implements Serializable {
 
         private int level;
         @DrawableRes
@@ -96,17 +107,16 @@ public class LevelFactory {
         }
 
         Level build() {
-            final Context context = AppCommons.getApplication();
 
             return new Level() {
                 @Override
                 public String getName() {
-                    return context.getString(name);
+                    return AppCommons.getApplication().getString(name);
                 }
 
                 @Override
                 public String getDescription() {
-                    return context.getString(description);
+                    return AppCommons.getApplication().getString(description);
                 }
 
                 @Override

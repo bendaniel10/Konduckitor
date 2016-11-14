@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_yellow"
+    android:padding="@dimen/container_padding"
     tools:context="com.bentechapps.konduckitor.activity.fragments.ChooseLevelFragment">
 
     <com.bentechapps.konduckitor.view.custom.HeaderControls
