@@ -11,8 +11,9 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
 public class GiveChangeMission extends SubMission {
 
 
-    public GiveChangeMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public GiveChangeMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
+        this.completedFactor = 500;
     }
 
     @Override
@@ -22,13 +23,13 @@ public class GiveChangeMission extends SubMission {
 
     @Override
     public boolean isSubMissionCompleted() {
-        return isComplete || (isComplete = missionInfoHolder.getTotalAmountPaidOut() >= getFactor() * level);
+        return isComplete || (isComplete = missionInfoHolder.getTotalAmountPaidOut() >= getCompletedFactor() * level);
 
     }
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Give out change of %s, %s given", getFactor() * level, missionInfoHolder.getTotalAmountPaidOut());
+        return String.format("Give out change of %s, %s given", getCompletedFactor() * level, missionInfoHolder.getTotalAmountPaidOut());
     }
 
     @Override

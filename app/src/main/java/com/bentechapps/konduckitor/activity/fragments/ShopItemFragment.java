@@ -29,7 +29,7 @@ public class ShopItemFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        appData = ApplicationData.getInstance(getActivity());
+        appData = ApplicationData.getInstance();
         reputationTextView = (TextView) getView().findViewById(R.id.reputationTextView);
         reputationTextView.setText(String.valueOf(appData.getReputation()));
         setListAdapter(new ShopItemsAdapter(getActivity(), reputationTextView));

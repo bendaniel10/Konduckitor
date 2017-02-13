@@ -29,7 +29,7 @@ public class DefaultConductorWalletDenomination extends Denomination {
 
     public DefaultConductorWalletDenomination(Context context) {
         random = new Random();
-        appData = ApplicationData.getInstance(context);
+        appData = ApplicationData.getInstance();
         handleDifficulty();
 
         fives = new FivesDenominationUnit();

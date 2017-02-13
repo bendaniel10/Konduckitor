@@ -10,8 +10,9 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
  */
 public class MaintainAngryPassengersMission extends SubMission {
 
-    public MaintainAngryPassengersMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public MaintainAngryPassengersMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
+        completedFactor = 2;
     }
 
     @Override
@@ -21,12 +22,12 @@ public class MaintainAngryPassengersMission extends SubMission {
 
     @Override
     public boolean isSubMissionCompleted() {
-        return isComplete || (isComplete = (missionInfoHolder.getNumberOfAngryPassengers() >= getFactor() + level));
+        return isComplete || (isComplete = (missionInfoHolder.getNumberOfAngryPassengers() >= getCompletedFactor() + level));
     }
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Have %s angry passengers at a time, %s angry", getFactor() + level, missionInfoHolder.getNumberOfAngryPassengers());
+        return String.format("Owe %s passengers past their trip duration, %s angry", getCompletedFactor() + level, missionInfoHolder.getNumberOfAngryPassengers());
     }
 
     @Override

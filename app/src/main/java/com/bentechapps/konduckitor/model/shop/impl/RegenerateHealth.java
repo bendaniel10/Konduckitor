@@ -3,10 +3,14 @@ package com.bentechapps.konduckitor.model.shop.impl;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import com.bentech.android.appcommons.utils.DrawableUtils;
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
+import com.bentechapps.konduckitor.app.Constants;
 import com.bentechapps.konduckitor.data.ApplicationData;
 import com.bentechapps.konduckitor.model.shop.ShopItem;
+
+import static com.bentechapps.konduckitor.activity.fragments.GamePlayFragment.TARGET_FPS;
 
 /**
  * Created by BenTech on 2/8/2015.
@@ -18,17 +22,17 @@ public class RegenerateHealth extends ShopItem {
 
     public RegenerateHealth(Context context) {
         super(context);
-        appData = ApplicationData.getInstance(context);
+        appData = ApplicationData.getInstance();
     }
 
     @Override
     public int getDuration() {
-        return 10 * GamePlayFragment.TARGET_FPS;
+        return (10 - (Constants.MAX_POWER_UP_UPGRADE_LEVEL - getUpgradeLevel())) * TARGET_FPS;
     }
 
     @Override
     public String getName() {
-        return "Regenerate";
+        return context.getString(R.string.regenerate);
     }
 
     @Override
@@ -38,17 +42,17 @@ public class RegenerateHealth extends ShopItem {
 
     @Override
     public Drawable getImage() {
-        return context.getResources().getDrawable(R.drawable.regenerate_life);
+        return DrawableUtils.getDrawable(context, R.drawable.regenerate_life);
     }
 
     @Override
     public String getDescription() {
-        return "Causes driver to drive slowly. It regenerates your health for a limited time interval.";
+        return context.getString(R.string.regenerate_health_description, getDuration() / TARGET_FPS);
     }
 
     @Override
     public int getCost() {
-        return 5000;
+        return 3000;
     }
 
     @Override
@@ -74,5 +78,16 @@ public class RegenerateHealth extends ShopItem {
     public void incrementHave(int offset) {
         super.incrementHave(offset);
         appData.incrementRegenerateCount(offset);
+    }
+
+    @Override
+    public void incrementUpgradeLevel(int offset) {
+        super.incrementUpgradeLevel(offset);
+        appData.incrementRegenerateLevel(offset);
+    }
+
+    @Override
+    public int getUpgradeLevel() {
+        return appData.getRegenerateLevel();
     }
 }

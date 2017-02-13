@@ -10,8 +10,8 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
  */
 public class BeatHighScoreSubMission extends SubMission {
 
-    public BeatHighScoreSubMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public BeatHighScoreSubMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
     }
 
     @Override

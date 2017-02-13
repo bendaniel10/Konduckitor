@@ -48,7 +48,7 @@ public class GamePlayTailView extends LinearLayout implements View.OnClickListen
 
     public GamePlayTailView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        appData = ApplicationData.getInstance(context);
+        appData = ApplicationData.getInstance();
         gamePlayFragment = (GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.tail_tile, this, true);
@@ -129,7 +129,7 @@ public class GamePlayTailView extends LinearLayout implements View.OnClickListen
     private void handlePowerUps() {
         ShopItem item = ShopItem.list(getContext()).get(appData.getDefaultPowerUp());
         if (item.getHave() > 0) {
-            AnimationSet powerUpAnimation = AnimationFactory.newRotateAnimation((item.getDuration() / GamePlayFragment.TARGET_FPS) * 2);
+            AnimationSet powerUpAnimation = AnimationFactory.newRotateAnimation(Math.max((item.getDuration() / GamePlayFragment.TARGET_FPS) * 2, 1));
             powerUpAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
@@ -162,6 +162,7 @@ public class GamePlayTailView extends LinearLayout implements View.OnClickListen
             gamePlayFragment.getGamePlayFragmentData().setPowerUpDuration(0);
             item.decrementHave(1);
             powerUpCount.setText(String.valueOf(item.getHave()));
+            appData.savePreference();
         } else {
             Sound.playEmptySfx();
             powerUp.startAnimation(AnimationFactory.newWobbleAnimation());

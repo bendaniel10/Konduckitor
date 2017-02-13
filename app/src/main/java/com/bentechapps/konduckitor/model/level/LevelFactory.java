@@ -23,7 +23,8 @@ public class LevelFactory {
 
     private static synchronized LevelBuilder builder() {
         if (levelBuilder == null) {
-            return new LevelBuilder();
+            levelBuilder = new LevelBuilder();
+            return levelBuilder;
         }
         return levelBuilder;
     }
@@ -41,7 +42,7 @@ public class LevelFactory {
 
         levels = new ArrayList<>(Constants.MAX_LEVEL);
 
-        LevelBuilder levelBuilder = builder();
+        builder();
 
         levelBuilder.withDescription(R.string.level_one_description)
                 .withName(R.string.level_one_name)
@@ -120,7 +121,7 @@ public class LevelFactory {
                 }
 
                 @Override
-                public int getLevel() {
+                public int getLevelNumber() {
                     return level;
                 }
 

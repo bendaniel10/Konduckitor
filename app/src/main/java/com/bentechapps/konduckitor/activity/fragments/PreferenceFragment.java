@@ -47,7 +47,7 @@ public class PreferenceFragment extends Fragment implements View.OnClickListener
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        appData = ApplicationData.getInstance(getActivity());
+        appData = ApplicationData.getInstance();
         sfxSwitch = (Switch) getView().findViewById(R.id.sfx_switch);
         soundSwitch = (Switch) getView().findViewById(R.id.music_switch);
         difficultySpinner = (Spinner) getView().findViewById(R.id.difficulty_spinner);

@@ -14,7 +14,6 @@ public class GamePlayFragmentData {
     private boolean isPowerUpMode;
     private int powerUpDuration;
     private boolean isMissionMode;
-    private Context context;
     private Mission currentMission;
     private Level currentLevel;
     private int unsettledPassengerHealthDeduction;
@@ -24,10 +23,8 @@ public class GamePlayFragmentData {
     }
 
     public GamePlayFragmentData(Context context) {
-        this.context = context;
         setUnsettledPassengerHealthDeduction(1);
         setSettledPassengerRewardPoint(1);
-        setMissionInfoHolder(new MissionInfoHolder());
     }
 
     public boolean isPowerUpMode() {
@@ -71,7 +68,7 @@ public class GamePlayFragmentData {
     }
 
     public void setMissionInfoHolder(MissionInfoHolder missionInfoHolder) {
-        ApplicationData applicationData = ApplicationData.getInstance(context);
+        ApplicationData applicationData = ApplicationData.getInstance();
         missionInfoHolder.setHighScore(applicationData.getHighScore());
         this.missionInfoHolder = missionInfoHolder;
     }

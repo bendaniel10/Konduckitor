@@ -11,8 +11,9 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
 public class SettleFemalesMission extends SubMission {
 
 
-    public SettleFemalesMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public SettleFemalesMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
+        this.completedFactor = 14;
     }
 
     @Override
@@ -22,12 +23,12 @@ public class SettleFemalesMission extends SubMission {
 
     @Override
     public boolean isSubMissionCompleted() {
-        return isComplete || (isComplete = missionInfoHolder.getNumberOfSettledFemales() >= getFactor() * level);
+        return isComplete || (isComplete = missionInfoHolder.getNumberOfSettledFemales() >= getCompletedFactor() * level);
     }
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Settle %s female passengers, %s settled.", getFactor() * level, missionInfoHolder.getNumberOfSettledFemales());
+        return String.format("Settle %s female passengers, %s settled.", getCompletedFactor() * level, missionInfoHolder.getNumberOfSettledFemales());
     }
 
     @Override

@@ -49,6 +49,7 @@
             android:src="@drawable/ic_launcher" />
 
         <ImageButton
+            android:src="@android:drawable/ic_media_play"
             android:id="@+id/playButton"
             android:layout_width="@dimen/home_play_button_size"
             android:layout_height="@dimen/home_play_button_size"
@@ -68,18 +69,24 @@
         android:weightSum="3">
 
         <ImageButton
+            android:scaleType="centerInside"
+            android:src="@drawable/share"
             android:id="@+id/connectBtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target_size"
             android:layout_weight="1" />
 
         <ImageButton
+            android:scaleType="centerInside"
+            android:src="@drawable/shop"
             android:id="@+id/shopButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target_size"
             android:layout_weight="1" />
 
         <ImageButton
+            android:scaleType="centerInside"
+            android:src="@drawable/settings"
             android:id="@+id/settingsBtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target_size"

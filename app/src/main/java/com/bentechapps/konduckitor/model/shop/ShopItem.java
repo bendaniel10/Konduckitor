@@ -2,6 +2,7 @@ package com.bentechapps.konduckitor.model.shop;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
 import com.bentechapps.konduckitor.data.GamePlayFragmentData;
@@ -11,7 +12,6 @@ import com.bentechapps.konduckitor.model.shop.impl.Comedian;
 import com.bentechapps.konduckitor.model.shop.impl.GraGra;
 import com.bentechapps.konduckitor.model.shop.impl.RegenerateHealth;
 import com.bentechapps.konduckitor.model.shop.impl.SplitLargestChange;
-import com.bentechapps.konduckitor.view.GamePlayPersonTile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by BenTech on 2/8/2015.
  */
-public abstract class ShopItem implements GameLoopItem{
+public abstract class ShopItem implements GameLoopItem {
     protected Drawable image;
     protected String description;
     protected int cost;
@@ -27,8 +27,26 @@ public abstract class ShopItem implements GameLoopItem{
     protected Context context;
     protected int duration;
     protected String name;
+    private int upgradeLevel;
 
-    public abstract int getDuration() ;
+    private ShopItem() {
+    }
+
+    public ShopItem(Context context) {
+        this.context = context;
+    }
+
+    public static List<ShopItem> list(Context context) {
+        return Arrays.asList(new SplitLargestChange(context), new GraGra(context), new CalmDown(context), new Comedian(context), new RegenerateHealth(context));
+    }
+
+    public abstract int getUpgradeLevel();
+
+    public void setUpgradeLevel(int upgradeLevel) {
+        this.upgradeLevel = upgradeLevel;
+    }
+
+    public abstract int getDuration();
 
     public void setDuration(int duration) {
         this.duration = duration;
@@ -40,25 +58,6 @@ public abstract class ShopItem implements GameLoopItem{
         this.name = name;
     }
 
-    private ShopItem() {
-    }
-
-    public ShopItem(Context context) {
-        this.context = context;
-    }
-
-    protected void setImage(Drawable image) {
-        this.image = image;
-    }
-
-    protected void setDescription(String description) {
-        this.description = description;
-    }
-
-    protected void setCost(int cost) {
-        this.cost = cost;
-    }
-
     public abstract int getHave();
 
     protected void setHave(int have) {
@@ -66,19 +65,30 @@ public abstract class ShopItem implements GameLoopItem{
     }
 
     public abstract Drawable getImage();
+
+    protected void setImage(Drawable image) {
+        this.image = image;
+    }
+
     public abstract String getDescription();
+
+    protected void setDescription(String description) {
+        this.description = description;
+    }
+
     public abstract int getCost();
 
-    public abstract void execute(GamePlayFragment gamePlayFragment);
-
-    public static List<ShopItem> list(Context context){
-        return Arrays.asList( new SplitLargestChange(context), new GraGra(context), new CalmDown(context), new Comedian(context), new RegenerateHealth(context));
+    protected void setCost(int cost) {
+        this.cost = cost;
     }
+
+    public abstract void execute(GamePlayFragment gamePlayFragment);
 
     @Override
     public void doGameRender(GamePlayFragment gamePlayFragment) {
         GamePlayFragmentData gamePlayFragmentData = gamePlayFragment.getGamePlayFragmentData();
         if (gamePlayFragmentData.isPowerUpMode()) {
+            Log.d("SEE", gamePlayFragmentData.getPowerUpDuration() + " <= " + gamePlayFragment.getGamePlayTailView().getGamePlayTailData().getDefaultShopItem().getDuration());
             if (gamePlayFragmentData.getPowerUpDuration() <= gamePlayFragment.getGamePlayTailView().getGamePlayTailData().getDefaultShopItem().getDuration()) {
                 gamePlayFragment.getGamePlayTailView().getGamePlayTailData().getDefaultShopItem().execute(gamePlayFragment);
             } else {
@@ -91,7 +101,7 @@ public abstract class ShopItem implements GameLoopItem{
     public void doGameUpdates(GamePlayFragment gamePlayFragment, double delta) {
         GamePlayFragmentData gamePlayFragmentData = gamePlayFragment.getGamePlayFragmentData();
         if (gamePlayFragmentData.isPowerUpMode()) {
-            if ((double)gamePlayFragmentData.getPowerUpDuration() < (double)gamePlayFragment.getGamePlayTailView().getGamePlayTailData().getDefaultShopItem().getDuration() * delta) {
+            if ((double) gamePlayFragmentData.getPowerUpDuration() < (double) gamePlayFragment.getGamePlayTailView().getGamePlayTailData().getDefaultShopItem().getDuration() * delta) {
                 gamePlayFragmentData.incrementPowerUpDuration(1);
             }
         }
@@ -103,11 +113,22 @@ public abstract class ShopItem implements GameLoopItem{
         gamePlayFragmentData.setPowerUpMode(false);
     }
 
+    @Deprecated
+    /**
+     * Users can now access any shop item they want. Shop items can be upgraded with money so that's how it will make the users play for money
+     *
+     */
     public abstract int getMinimumAllowedHighScore();
+
     public void decrementHave(int offset) {
         this.have -= offset;
     }
+
     public void incrementHave(int offset) {
         this.have += offset;
+    }
+
+    public void incrementUpgradeLevel(int offset) {
+        this.upgradeLevel += offset;
     }
 }

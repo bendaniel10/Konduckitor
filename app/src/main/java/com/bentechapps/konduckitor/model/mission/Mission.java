@@ -32,9 +32,9 @@ public abstract class Mission implements GameLoopItem {
      * @return
      */
     public static Mission getMission(GamePlayFragment gamePlayFragment) {
-        ApplicationData applicationData = ApplicationData.getInstance(gamePlayFragment.getActivity());
+        ApplicationData applicationData = ApplicationData.getInstance();
         int missionNumber = applicationData.getCurrentMission();
-        return Level.getLevel(gamePlayFragment).listMission(gamePlayFragment).get(missionNumber - 1);
+        return Level.getCurrentLevel(gamePlayFragment.getContext()).listMission().get(missionNumber - 1);
     }
 
     public Mission restartMission() {
@@ -58,7 +58,7 @@ public abstract class Mission implements GameLoopItem {
         return subMissionList;
     }
 
-    public boolean isMissionComplete() {
+    public boolean isMissionComplete(final GamePlayFragment gamePlayFragment) {
         boolean isComplete = true;
         for (final SubMission subMission : subMissionList) {
             if (!subMission.isSubMissionCompleted()) {
@@ -85,7 +85,7 @@ public abstract class Mission implements GameLoopItem {
     public void doGameUpdates(GamePlayFragment gamePlayFragment, double delta) {
         GamePlayFragmentData gamePlayFragmentData = gamePlayFragment.getGamePlayFragmentData();
         if (gamePlayFragmentData.isMissionMode()) {
-            if (gamePlayFragmentData.getCurrentMission().isMissionComplete()) {
+            if (gamePlayFragmentData.getCurrentMission().isMissionComplete(gamePlayFragment)) {
                 handleSaveAndMoveToNextMission(gamePlayFragment);
             }
         }
@@ -97,7 +97,7 @@ public abstract class Mission implements GameLoopItem {
         GamePlayFragmentData gamePlayFragmentData = gamePlayFragment.getGamePlayFragmentData();
 
         if (gamePlayFragmentData.isMissionMode()) {
-            if (gamePlayFragmentData.getCurrentMission().isMissionComplete()) {
+            if (gamePlayFragmentData.getCurrentMission().isMissionComplete(gamePlayFragment)) {
                 gamePlayHeaderView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -111,7 +111,7 @@ public abstract class Mission implements GameLoopItem {
     }
 
     private void handleSaveAndMoveToNextMission(GamePlayFragment gamePlayFragment) {
-        ApplicationData appData = ApplicationData.getInstance(gamePlayFragment.getActivity());
+        ApplicationData appData = ApplicationData.getInstance();
         GamePlayHeaderView gamePlayHeaderView = gamePlayFragment.getGamePlayHeaderView();
         //stop game
         gamePlayHeaderView.getGamePlayHeaderData().setPaused(!gamePlayHeaderView.getGamePlayHeaderData().isPaused());
@@ -127,6 +127,6 @@ public abstract class Mission implements GameLoopItem {
 
         //save mission progress
         appData.incrementMissionProgress(gamePlayFragment);
-
+        appData.savePreference();
     }
 }

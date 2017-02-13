@@ -10,8 +10,9 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
  */
 public class ExactAmountMission extends SubMission {
 
-    public ExactAmountMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public ExactAmountMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
+        completedFactor = 10;
     }
 
     @Override
@@ -21,12 +22,12 @@ public class ExactAmountMission extends SubMission {
 
     @Override
     public boolean isSubMissionCompleted() {
-        return isComplete || (isComplete = missionInfoHolder.getExactFarePassengers() >= getFactor() * level);
+        return isComplete || (isComplete = missionInfoHolder.getExactFarePassengers() >= getCompletedFactor() * level);
     }
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Collect fare from %s passengers with exact amount, %s collected", getFactor() * level, missionInfoHolder.getExactFarePassengers());
+        return String.format("Collect fare from %s passengers with exact amount, %s collected", getCompletedFactor() * level, missionInfoHolder.getExactFarePassengers());
     }
 
     @Override

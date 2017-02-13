@@ -9,10 +9,16 @@ import com.bentechapps.konduckitor.model.shop.ShopItem;
 /**
  * Created by BenTech on 2/8/2015.
  */
+@Deprecated
 public class AssistantConductor extends ShopItem {
 
     public AssistantConductor(Context context) {
         super(context);
+    }
+
+    @Override
+    public int getUpgradeLevel() {
+        return 0;
     }
 
     @Override

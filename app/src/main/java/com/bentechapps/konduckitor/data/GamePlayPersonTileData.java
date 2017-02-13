@@ -2,13 +2,13 @@ package com.bentechapps.konduckitor.data;
 
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
 import com.bentechapps.konduckitor.model.denomination.unit.DenominationUnit;
-import com.bentechapps.konduckitor.model.person.Person;
+import com.bentechapps.konduckitor.model.person.Passenger;
 
 /**
  * Created by BenTech on 1/31/2015.
  */
 public class GamePlayPersonTileData {
-    private Person person;
+    private Passenger passenger;
     private DenominationUnit amountToPay;
     private DenominationUnit amountWith;
     private short timeLeft;
@@ -17,9 +17,9 @@ public class GamePlayPersonTileData {
     private GamePlayPersonTileData() {
     }
 
-    public static GamePlayPersonTileData createPersonTileInfo(Person person, DenominationUnit amountToPay, DenominationUnit amountWith, short exitTime) {
+    public static GamePlayPersonTileData createPersonTileInfo(Passenger passenger, DenominationUnit amountToPay, DenominationUnit amountWith, short exitTime) {
         GamePlayPersonTileData personTile = new GamePlayPersonTileData();
-        personTile.setPerson(person);
+        personTile.setPassenger(passenger);
         personTile.setAmountToPay(amountToPay);
         personTile.setAmountWith(amountWith);
         personTile.setTimeLeft((short) (exitTime * GamePlayFragment.TARGET_FPS));
@@ -36,12 +36,12 @@ public class GamePlayPersonTileData {
     }
 
 
-    public Person getPerson() {
-        return person;
+    public Passenger getPassenger() {
+        return passenger;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
     }
 
     public DenominationUnit getAmountToPay() {

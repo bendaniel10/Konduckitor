@@ -53,7 +53,7 @@ public class GamePlayHeaderView extends RelativeLayout implements View.OnClickLi
     }
 
     private void init() {
-        appData = ApplicationData.getInstance(this.mainActivity);
+        appData = ApplicationData.getInstance();
         healthTextView = (TextView) findViewById(R.id.health);
         pauseButton = (ImageButton) findViewById(R.id.pause_button);
         pointsTextView = (TextView) findViewById(R.id.points);

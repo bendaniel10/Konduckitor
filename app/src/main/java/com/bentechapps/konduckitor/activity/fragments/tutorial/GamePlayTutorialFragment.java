@@ -8,11 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.bentechapps.konduckitor.R;
-import com.bentechapps.konduckitor.activity.MainActivity;
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
 import com.bentechapps.konduckitor.activity.fragments.tutorial.hint.Hint;
 import com.bentechapps.konduckitor.activity.fragments.tutorial.hint.impl.PlayButtonHint;
@@ -20,10 +18,8 @@ import com.bentechapps.konduckitor.data.GamePlayHeaderData;
 import com.bentechapps.konduckitor.data.GamePlayTailData;
 import com.bentechapps.konduckitor.model.denomination.impl.DefaultConductorWalletDenomination;
 import com.bentechapps.konduckitor.model.shop.ShopItem;
-import com.bentechapps.konduckitor.view.GamePlayPersonTile;
 import com.bentechapps.konduckitor.view.tutorial.GamePlayTutorialHeaderView;
 import com.bentechapps.konduckitor.view.tutorial.GamePlayTutorialTailView;
-import com.bentechapps.konduckitor.view.tutorial.adapter.TutorialPersonTileAdapter;
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
@@ -82,13 +78,13 @@ public class GamePlayTutorialFragment extends GamePlayFragment implements OnShow
     @Override
     protected void initUI() {
         gridview = (GridView) getView().findViewById(R.id.gridview);
-        gridview.setAdapter(personTileAdapter = new TutorialPersonTileAdapter(getActivity()));
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((GamePlayPersonTile) gridview.getAdapter().getItem(position)).onClick(view);
-            }
-        });
+//        gridview.setAdapter(personTileAdapter = new TutorialPersonTileAdapter(getActivity()));
+//        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                ((GamePlayPersonTile) gridview.getAdapter().getItem(position)).onClick(view);
+//            }
+//        });
         gamePlayHeaderView = (GamePlayTutorialHeaderView) getView().findViewById(R.id.game_play_header_view);
         gamePlayTailView = (GamePlayTutorialTailView) getView().findViewById(R.id.game_play_tail_view);
     }
@@ -218,16 +214,16 @@ public class GamePlayTutorialFragment extends GamePlayFragment implements OnShow
         return showcaseView;
     }
 
+    public void setShowcaseView(ShowcaseView showcaseView) {
+        this.showcaseView = showcaseView;
+    }
+
     private void handlePausedHint() {
         if (isShowHint()) {
             if (currentHint.isPausedHint()) {
                 currentHint.doHint();
             }
         }
-    }
-
-    public void setShowcaseView(ShowcaseView showcaseView) {
-        this.showcaseView = showcaseView;
     }
 
     private void handlePlayingHint() {
@@ -244,52 +240,52 @@ public class GamePlayTutorialFragment extends GamePlayFragment implements OnShow
     public class GameLooper extends GamePlayFragment.GameLooper {
         @Override
         protected Object doInBackground(Object[] params) {
-            long lastLoopTime = System.nanoTime();
-
-            while (true) {
-
-                if (this.isCancelled()) {
-                    Log.i("LOOPER", "Looping Thread cancelled.");
-                    break;
-                } else {
-                    handlePausedHint();
-                    if (!gamePlayHeaderView.getGamePlayHeaderData().isPaused()) {
-                        // work out how long its been since the last update, this
-                        // will be used to calculate how far the entities should
-                        // move this loop
-                        long now = System.nanoTime();
-                        handlePlayingHint();
-                        long updateLength = now - lastLoopTime;
-                        lastLoopTime = now;
-                        double delta = updateLength / ((double) OPTIMAL_TIME);
-
-                        //power up processing.
-                        getGamePlayTailView().getGamePlayTailData().getDefaultShopItem().doGameUpdates(GamePlayTutorialFragment.this, delta);
-                        getGamePlayTailView().getGamePlayTailData().getDefaultShopItem().doGameRender(GamePlayTutorialFragment.this);
-
-                        //Header Tile Processing
-                        gamePlayHeaderView.doGameUpdates(GamePlayTutorialFragment.this, delta);
-                        gamePlayHeaderView.doGameRender(GamePlayTutorialFragment.this);
-
-                        //Individual Tile Processing
-                        GridView gridView = GamePlayTutorialFragment.this.getGridView();
-                        for (int j = gridView.getAdapter().getCount() - 1; j >= 0; j--) {
-                            GamePlayPersonTile tile = (GamePlayPersonTile) gridView.getAdapter().getItem(j);
-                            tile.doGameUpdates(GamePlayTutorialFragment.this, delta);
-                            tile.doGameRender(GamePlayTutorialFragment.this);
-                        }
-
-                        try {
-                            //OPTIMAL_TIME + lastLoopTime - System.nanoTime
-                            Thread.sleep(Math.max(0, (lastLoopTime - System.nanoTime() + OPTIMAL_TIME) / 1000000));
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
-            }
-
+//            long lastLoopTime = System.nanoTime();
+//
+//            while (true) {
+//
+//                if (this.isCancelled()) {
+//                    Log.i("LOOPER", "Looping Thread cancelled.");
+//                    break;
+//                } else {
+//                    handlePausedHint();
+//                    if (!gamePlayHeaderView.getGamePlayHeaderData().isPaused()) {
+//                        // work out how long its been since the last update, this
+//                        // will be used to calculate how far the entities should
+//                        // move this loop
+//                        long now = System.nanoTime();
+//                        handlePlayingHint();
+//                        long updateLength = now - lastLoopTime;
+//                        lastLoopTime = now;
+//                        double delta = updateLength / ((double) OPTIMAL_TIME);
+//
+//                        //power up processing.
+//                        getGamePlayTailView().getGamePlayTailData().getDefaultShopItem().doGameUpdates(GamePlayTutorialFragment.this, delta);
+//                        getGamePlayTailView().getGamePlayTailData().getDefaultShopItem().doGameRender(GamePlayTutorialFragment.this);
+//
+//                        //Header Tile Processing
+//                        gamePlayHeaderView.doGameUpdates(GamePlayTutorialFragment.this, delta);
+//                        gamePlayHeaderView.doGameRender(GamePlayTutorialFragment.this);
+//
+//                        //Individual Tile Processing
+//                        GridView gridView = GamePlayTutorialFragment.this.getGridView();
+//                        for (int j = gridView.getAdapter().getCount() - 1; j >= 0; j--) {
+//                            GamePlayPersonTile tile = (GamePlayPersonTile) gridView.getAdapter().getItem(j);
+//                            tile.doGameUpdates(GamePlayTutorialFragment.this, delta);
+//                            tile.doGameRender(GamePlayTutorialFragment.this);
+//                        }
+//
+//                        try {
+//                            //OPTIMAL_TIME + lastLoopTime - System.nanoTime
+//                            Thread.sleep(Math.max(0, (lastLoopTime - System.nanoTime() + OPTIMAL_TIME) / 1000000));
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            }
+//
             return null;
         }
     }

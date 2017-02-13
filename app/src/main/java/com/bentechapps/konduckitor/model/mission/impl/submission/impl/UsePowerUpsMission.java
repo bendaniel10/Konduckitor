@@ -10,8 +10,9 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
  */
 public class UsePowerUpsMission extends SubMission {
 
-    public UsePowerUpsMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public UsePowerUpsMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
+        this.completedFactor = 4;
     }
 
     @Override
@@ -21,12 +22,12 @@ public class UsePowerUpsMission extends SubMission {
 
     @Override
     public boolean isSubMissionCompleted() {
-        return isComplete || (isComplete = missionInfoHolder.getPowerUpUseCount() >= getFactor() + level);
+        return isComplete || (isComplete = missionInfoHolder.getPowerUpUseCount() >= getCompletedFactor() + level);
     }
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Use %s power ups, %s used", getFactor() + level, missionInfoHolder.getPowerUpUseCount());
+        return String.format("Use %s power ups, %s used", getCompletedFactor() + level, missionInfoHolder.getPowerUpUseCount());
     }
 
     @Override

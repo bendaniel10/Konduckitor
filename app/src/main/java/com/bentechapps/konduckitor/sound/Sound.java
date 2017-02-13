@@ -57,7 +57,7 @@ public class Sound {
     }
 
     private static void initApplicationData(Context context) {
-        applicationData = ApplicationData.getInstance(context);
+        applicationData = ApplicationData.getInstance();
     }
 
     public static MediaPlayer getLoopingTrack(Context context, int resourceId) {

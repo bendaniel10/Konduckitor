@@ -1,15 +1,13 @@
 package com.bentechapps.konduckitor.data;
 
-import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
-
 /**
  * Created by BenTech on 2/7/2015.
  */
 public class GamePlayHeaderData {
+    public static int MAX_LIFE = 100;
     private boolean isPaused;
     private boolean isSaved;
     private long playTime;
-    public static int MAX_LIFE = 100;
     private int life;//max 100
     private int points;
 
@@ -58,7 +56,7 @@ public class GamePlayHeaderData {
 
     public void decrementLife(int life) {
         this.life -= life;
-        if(this.life < 0)
+        if (this.life < 0)
             this.life = 0;
     }
 
@@ -68,5 +66,17 @@ public class GamePlayHeaderData {
 
     public void incrementPoints(int points) {
         this.points += points;
+    }
+
+    /**
+     * Resets the data except for points. Points will not be reset to enable stacking of scores for
+     * the highscore feature when missions are completed in succession.
+     */
+    public void reset() {
+        isPaused = true;
+        isSaved = false;
+        playTime = 0;
+        life = MAX_LIFE;
+//        points should not be reset to enable score stacking through missions
     }
 }

@@ -2,14 +2,13 @@ package com.bentechapps.konduckitor.model.shop.impl;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.widget.Button;
 
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
 import com.bentechapps.konduckitor.data.ApplicationData;
 import com.bentechapps.konduckitor.model.denomination.unit.DenominationUnit;
+import com.bentechapps.konduckitor.model.person.Passenger;
 import com.bentechapps.konduckitor.model.shop.ShopItem;
-import com.bentechapps.konduckitor.view.GamePlayPersonTile;
 import com.bentechapps.konduckitor.view.GamePlayTailView;
 import com.bentechapps.konduckitor.view.custom.WalletButton;
 
@@ -18,15 +17,15 @@ import com.bentechapps.konduckitor.view.custom.WalletButton;
  */
 public class SplitLargestChange extends ShopItem {
     private final ApplicationData appData;
-
+    private static final int MINIMUM_SPLIT = 5;
     public SplitLargestChange(Context context) {
         super(context);
-        appData = ApplicationData.getInstance(context);
+        appData = ApplicationData.getInstance();
     }
 
     @Override
     public int getDuration() {
-        return 1 * GamePlayFragment.TARGET_FPS;
+        return 1;
     }
 
     @Override
@@ -46,9 +45,7 @@ public class SplitLargestChange extends ShopItem {
 
     @Override
     public String getDescription() {
-        return new StringBuilder().append("Driver finds some change at the Petrol Station. ")
-                .append("Splits all the money you have in the largest denomination across other smaller")
-                .append(" denominations. Your passengers will definitely be angry for the time wasted.").toString();
+        return context.getString(R.string.split_largest_change_description, getUpgradeLevel() + MINIMUM_SPLIT);
     }
 
     @Override
@@ -57,20 +54,20 @@ public class SplitLargestChange extends ShopItem {
     }
 
     @Override
-    public void execute(GamePlayFragment gamePlayFragment) {
-        if(gamePlayFragment.getGamePlayFragmentData().getPowerUpDuration() == 1) {
+    public void execute(final GamePlayFragment gamePlayFragment) {
+        if (gamePlayFragment.getGamePlayFragmentData().getPowerUpDuration() == 1) {
             gamePlayFragment.getGamePlayFragmentData().getMissionInfoHolder().incrementSplitUseCount(1);
         }
         DenominationUnit largestDenomination = gamePlayFragment.getGamePlayTailView().getGamePlayTailData().getConductorWallet().getHundreds();
         GamePlayTailView tailView = gamePlayFragment.getGamePlayTailView();
         DenominationUnit split;
         int splitIndex;
-        int largestCount = largestDenomination.getCount();
+        int largestCount = Math.min(largestDenomination.getCount(), getUpgradeLevel() + MINIMUM_SPLIT);//upgrade-level 0 will split 5 100s
 
-        for(int i = 0; i < largestCount; i++) {//for each highest denomination
+        for (int i = 0; i < largestCount; i++) {//for each highest denomination
             tailView.decrementDenominationUnitCount((WalletButton) tailView.findViewById(R.id.hundreds), largestDenomination, (short) 1);
             splitIndex = DenominationUnit.list().size() - 2;
-            for(int whatRemains = largestDenomination.getValue(); whatRemains > 0; ) {//while a largest denomination still has money
+            for (int whatRemains = largestDenomination.getValue(); whatRemains > 0; ) {//while a largest denomination still has money
                 splitIndex = splitIndex < 0 ? DenominationUnit.list().size() - 2 : splitIndex;
                 split = DenominationUnit.list().get(splitIndex);
 
@@ -83,10 +80,22 @@ public class SplitLargestChange extends ShopItem {
             }
 
         }
+        Passenger passenger;
+        for (int j = gamePlayFragment.getPassengersAdapter().getItemCount() - 1; j >= 0; j--) {
+            passenger = gamePlayFragment.getPassengersAdapter().getItem(j);
 
-        for (int j = gamePlayFragment.getGridView().getAdapter().getCount() - 1; j >= 0; j--) {
-            GamePlayPersonTile tile = (GamePlayPersonTile) gamePlayFragment.getGridView().getAdapter().getItem(j);
-            tile.decrementTimeRemaining((short) 5);
+            if (passenger.getTimeLeft() < passenger.getExitTime()) {
+                passenger.setTimeLeft((short) (passenger.getTimeLeft() - 5));
+            }
+
+            final int finalJ = j;
+            gamePlayFragment.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    gamePlayFragment.getPassengersAdapter().notifyItemChanged(finalJ);
+                }
+            });
+
         }
     }
 
@@ -102,8 +111,20 @@ public class SplitLargestChange extends ShopItem {
     }
 
     @Override
+    public void incrementUpgradeLevel(int offset) {
+        super.incrementUpgradeLevel(offset);
+        appData.incrementSplitLargestChangeLevel(offset);
+    }
+
+    @Override
     public void decrementHave(int offset) {
         super.decrementHave(offset);
         appData.decrementSplitLargestChangeCount(offset);
+    }
+
+
+    @Override
+    public int getUpgradeLevel() {
+        return appData.getSplitLargestChangeLevel();
     }
 }

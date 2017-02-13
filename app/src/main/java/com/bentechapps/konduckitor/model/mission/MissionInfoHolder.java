@@ -2,10 +2,12 @@ package com.bentechapps.konduckitor.model.mission;
 
 import com.bentechapps.konduckitor.data.GamePlayHeaderData;
 
+import java.io.Serializable;
+
 /**
  * Created by Daniel on 4/10/2015.
  */
-public class MissionInfoHolder {
+public class MissionInfoHolder implements Serializable {
 
     private long gamePlayTime;
     private int health;
@@ -222,7 +224,10 @@ public class MissionInfoHolder {
     }
 
     public int decrementNumberOfAngryPassengers(int numberOfAngryPassengers) {
-        return this.numberOfAngryPassengers -= numberOfAngryPassengers;
+        if (numberOfAngryPassengers > 0) {
+            return this.numberOfAngryPassengers -= numberOfAngryPassengers;
+        }
+        return numberOfAngryPassengers;
     }
 
     public int getNumberOfSettledPassengers() {
@@ -249,4 +254,36 @@ public class MissionInfoHolder {
         return getComedianUseCount() + getCalmDownUseCount() + getRegenerateUseCount() + getSplitUseCount() + getGraGraUseCount();
     }
 
+    /**
+     * Doesn't reset score. To enable stacking scores that will assist in creating highscores when multiple missions are
+     * completed in succession.
+     */
+    public void reset() {
+        gamePlayTime = 0;
+        setHealth(GamePlayHeaderData.MAX_LIFE);
+
+        //for continuity, this will help stack scores to beat high score in missions.
+//        score = 0;
+        numberOfSettledMales = 0;
+        numberOfSettledFemales = 0;
+        exactFarePassengers = 0;
+        totalAmountCollected = 0;
+        totalAmountPaidOut = 0;
+        powerUpUseCount = 0;
+
+        escapedPassengers = 0;
+
+        calmDownUseCount = 0;
+        splitUseCount = 0;
+        regenerateUseCount = 0;
+        comedianUseCount = 0;
+        graGraUseCount = 0;
+        numberOfAngryPassengers = 0;
+        highScore = 0;
+        tensUseCount = 0;
+        twentiesUseCount = 0;
+        fiftiesUseCount = 0;
+        hundredsUseCount = 0;
+        fivesUseCount = 0;
+    }
 }

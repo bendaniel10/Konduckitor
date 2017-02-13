@@ -75,7 +75,7 @@ public class MissionCompletedDialog extends Dialog implements View.OnClickListen
     private void handleNextMission() {
         GamePlayFragmentData gamePlayFragmentData = gamePlayFragment.getGamePlayFragmentData();
         gamePlayFragmentData.setCurrentMission(Mission.getMission(gamePlayFragment));
-        gamePlayFragmentData.setCurrentLevel(Level.getLevel(gamePlayFragment));
+        gamePlayFragmentData.setCurrentLevel(Level.getCurrentLevel(getContext()));
         GamePlayFragment.handleRestartAndNextMissionInit(gamePlayFragment);
         gamePlayFragment.initializeGame();
     }
@@ -91,7 +91,7 @@ public class MissionCompletedDialog extends Dialog implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        appData = ApplicationData.getInstance(getContext());
+        appData = ApplicationData.getInstance();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.mission_completed_dialog);
         missionList = (ListView) findViewById(R.id.mission_list);
@@ -116,14 +116,14 @@ public class MissionCompletedDialog extends Dialog implements View.OnClickListen
         long playTimeInt = gamePlayFragment.getGamePlayHeaderView().getGamePlayHeaderData().getPlayTime();
         long moneyInt = (playTimeInt * scoreInt) / 100;
 
-        if(isNewHighScore(scoreInt)) {
+        if (isNewHighScore(scoreInt)) {
             doHighScoreInit();
         }
 
         money.setText(String.format("Money: %s", moneyInt));
         score.setText(String.format("Score: %s", scoreInt));
 
-        if(appData.getCurrentMission() == 1 && appData.getCurrentLevel() != 1) {//was promoted to a new level
+        if (appData.getCurrentMission() == 1 && appData.getCurrentLevel() != 1) {//was promoted to a new level
             nextMissionButton.setVisibility(View.GONE);
         }
         Sound.playGameOverMusic();

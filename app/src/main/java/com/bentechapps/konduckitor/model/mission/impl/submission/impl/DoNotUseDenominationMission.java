@@ -11,8 +11,8 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
 
 //remember to keep track of returned money to wallet
 public class DoNotUseDenominationMission extends SubMission {
-    public DoNotUseDenominationMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public DoNotUseDenominationMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class DoNotUseDenominationMission extends SubMission {
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Do not use %ss denomination, %s used", getFactor(), getCountOfFactorDenominationUsed());
+        return String.format("Do not use %ss denomination, %s used", getCompletedFactor(), getCountOfFactorDenominationUsed());
     }
 
     @Override
@@ -37,7 +37,7 @@ public class DoNotUseDenominationMission extends SubMission {
 
     public int getCountOfFactorDenominationUsed() {
         int count = 0;
-        switch (getFactor()) {
+        switch (getCompletedFactor()) {
             case 10:
                 count = missionInfoHolder.getTensUseCount();
                 break;

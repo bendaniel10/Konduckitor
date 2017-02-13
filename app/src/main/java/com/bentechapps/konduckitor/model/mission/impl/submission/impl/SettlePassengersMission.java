@@ -1,7 +1,6 @@
 package com.bentechapps.konduckitor.model.mission.impl.submission.impl;
 
 import com.bentechapps.konduckitor.R;
-import com.bentechapps.konduckitor.model.mission.Mission;
 import com.bentechapps.konduckitor.model.mission.MissionInfoHolder;
 import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
 
@@ -10,8 +9,9 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
  */
 public class SettlePassengersMission extends SubMission {
 
-    public SettlePassengersMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public SettlePassengersMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
+        this.completedFactor = 20;
     }
 
     @Override
@@ -21,12 +21,12 @@ public class SettlePassengersMission extends SubMission {
 
     @Override
     public boolean isSubMissionCompleted() {
-        return isComplete || (isComplete = missionInfoHolder.getNumberOfSettledPassengers() >= getFactor() * level);
+        return isComplete || (isComplete = missionInfoHolder.getNumberOfSettledPassengers() >= getCompletedFactor() * level);
     }
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Settle %s passengers, %s settled", getFactor() * level, missionInfoHolder.getNumberOfSettledPassengers());
+        return String.format("Settle %s passengers, %s settled", getCompletedFactor() * level, missionInfoHolder.getNumberOfSettledPassengers());
     }
 
     @Override

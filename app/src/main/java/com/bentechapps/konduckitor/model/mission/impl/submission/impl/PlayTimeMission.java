@@ -11,8 +11,9 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
 public class PlayTimeMission extends SubMission {
 
 
-    public PlayTimeMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public PlayTimeMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
+        completedFactor = 300;
     }
 
     @Override
@@ -22,12 +23,12 @@ public class PlayTimeMission extends SubMission {
 
     @Override
     public boolean isSubMissionCompleted() {
-        return missionInfoHolder.getGamePlayTime() >= getFactor() * level;
+        return missionInfoHolder.getGamePlayTime() >= getCompletedFactor() * level;
     }
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Play for at least %s seconds, %s played", getFactor() * level, missionInfoHolder.getGamePlayTime());
+        return String.format("Play for at least %s seconds, %s played", getCompletedFactor() * level, missionInfoHolder.getGamePlayTime());
     }
 
     @Override

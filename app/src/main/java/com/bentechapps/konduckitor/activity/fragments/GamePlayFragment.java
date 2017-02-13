@@ -2,33 +2,43 @@ package com.bentechapps.konduckitor.activity.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bentech.android.appcommons.fragment.AppCommonsFragment;
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.util.SystemUiHider;
+import com.bentechapps.konduckitor.app.Constants;
 import com.bentechapps.konduckitor.data.ApplicationData;
 import com.bentechapps.konduckitor.data.GamePlayFragmentData;
 import com.bentechapps.konduckitor.data.GamePlayHeaderData;
 import com.bentechapps.konduckitor.data.GamePlayTailData;
 import com.bentechapps.konduckitor.model.denomination.impl.DefaultConductorWalletDenomination;
+import com.bentechapps.konduckitor.model.person.Passenger;
+import com.bentechapps.konduckitor.model.person.PassengerFactory;
+import com.bentechapps.konduckitor.model.person.PassengerState;
 import com.bentechapps.konduckitor.model.shop.ShopItem;
 import com.bentechapps.konduckitor.sound.Sound;
 import com.bentechapps.konduckitor.view.GamePlayHeaderView;
-import com.bentechapps.konduckitor.view.GamePlayPersonTile;
 import com.bentechapps.konduckitor.view.GamePlayTailView;
-import com.bentechapps.konduckitor.view.adapter.PersonTileAdapter;
+import com.bentechapps.konduckitor.view.adapter.PassengersAdapter;
 import com.bentechapps.konduckitor.view.custom.PauseGameDialog;
 import com.bentechapps.konduckitor.view.custom.StartMissionDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -36,21 +46,30 @@ import com.bentechapps.konduckitor.view.custom.StartMissionDialog;
  *
  * @see SystemUiHider
  */
-public class GamePlayFragment extends Fragment {
+public class GamePlayFragment extends AppCommonsFragment {
     public static final int TARGET_FPS = 10;
     public static final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+    private static final String TAG = GamePlayFragment.class.getSimpleName();
     protected GamePlayHeaderView gamePlayHeaderView;
     protected GameLooper loop;
-    protected PersonTileAdapter personTileAdapter;
     protected GamePlayFragmentData gamePlayFragmentData;
     protected ApplicationData appData;
     protected GamePlayTailView gamePlayTailView;
-    protected GridView gridview;
+    @BindView(R.id.passengersRecyclerView)
+    RecyclerView passengersRecyclerView;
+    private PassengersAdapter passengersAdapter;
+    private List<Passenger> passengers;
+    private List<Passenger> fullPassengersList;
+    private ListIterator<Passenger> fullPassengersListIterator;
+    private DefaultConductorWalletDenomination conductorWallet;
+    private GamePlayHeaderData gamePlayHeaderData;
 
     public static void handleRestartAndNextMissionInit(GamePlayFragment gamePlayFragment) {
         GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData(gamePlayFragment.getActivity());
         if (gamePlayFragment.getGamePlayFragmentData().isMissionMode()) {
             gamePlayFragmentData.setCurrentLevel(gamePlayFragment.getGamePlayFragmentData().getCurrentLevel());
+            gamePlayFragmentData.getCurrentLevel().getMissionInfoHolder().reset();
+            gamePlayFragmentData.setMissionInfoHolder(gamePlayFragmentData.getCurrentLevel().getMissionInfoHolder());
             gamePlayFragmentData.setCurrentMission(gamePlayFragment.getGamePlayFragmentData().getCurrentMission());
             gamePlayFragmentData.setIsMissionMode(true);
         }
@@ -58,6 +77,7 @@ public class GamePlayFragment extends Fragment {
         if (gamePlayFragmentData.isMissionMode()) {
             gamePlayFragmentData.setCurrentMission(gamePlayFragment.getGamePlayFragmentData().getCurrentMission().restartMission());
         }
+
     }
 
     public GamePlayFragmentData getGamePlayFragmentData() {
@@ -94,7 +114,103 @@ public class GamePlayFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_game_play, container, false);
+        View rootView = inflater.inflate(R.layout.activity_game_play, container, false);
+        ButterKnife.bind(this, rootView);
+
+        if (passengersAdapter == null) {
+            fullPassengersList = PassengerFactory.listPassengers(gamePlayFragmentData.getCurrentLevel());
+            passengersAdapter = new PassengersAdapter(
+                    onPassengerClicked(),
+                    appCommonsActivity,
+                    passengers = new ArrayList<>(fullPassengersList.subList(0, Constants.MAX_PASSENGERS))
+            );
+        }
+        fullPassengersListIterator = fullPassengersList.listIterator(Constants.MAX_PASSENGERS);
+        passengersRecyclerView.setAdapter(passengersAdapter);
+        passengersRecyclerView.setLayoutManager(new GridLayoutManager(appCommonsActivity, 4));
+        return rootView;
+    }
+
+    private View.OnClickListener onPassengerClicked() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int selectedPosition = passengersRecyclerView.getChildAdapterPosition(v);
+                Passenger selectedPassenger = passengers.get(selectedPosition);
+
+                if (gamePlayHeaderView.getGamePlayHeaderData().isPaused()) {
+                    return;
+                }
+
+                boolean isCredit = gamePlayTailView.getGamePlayTailData().getSelectedAmount() > 0;
+                if (isCredit) {
+                    handleCredit(selectedPassenger);
+                } else {
+                    handleDebit(selectedPassenger);
+                }
+            }
+        };
+    }
+
+    protected void handleCredit(Passenger selectedPassenger) {
+        if (!selectedPassenger.getAmountToPay().isEmpty()) {
+            //can't give back change without collecting money first
+            gamePlayTailView.doClearWalletFirstHint();
+            Sound.playEmptySfx();
+            return;
+        }
+
+        Sound.playReturnChangeSfx();
+        int credit = gamePlayTailView.getGamePlayTailData().getSelectedAmount();
+
+        selectedPassenger.getAmountWith().incrementValue((short) credit);
+        selectedPassenger.getAmountWith().incrementCount((short) 1);
+
+        gamePlayTailView.clearSelected();
+        if (selectedPassenger.getAmountWith().getValue() > 0) {
+            //punish player for giving more change than expected
+            gamePlayHeaderView.decrementLife(Constants.EXCESS_CHANGE_PENALTY);
+        }
+
+        if (selectedPassenger.getAmountWith().getValue() >= 0 && selectedPassenger.getPassengerState() != PassengerState.SETTLED) {
+            if (selectedPassenger.isMale()) {
+                gamePlayFragmentData.getMissionInfoHolder().incrementNumberOfSettledMales(1);
+            } else {
+                gamePlayFragmentData.getMissionInfoHolder().incrementNumberOfSettledFemales(1);
+            }
+            gamePlayFragmentData.getMissionInfoHolder().incrementTotalAmountPaidOut(credit);
+            selectedPassenger.setPassengerState(PassengerState.SETTLED);
+        }
+    }
+
+
+    protected void handleDebit(Passenger selectedPassenger) {
+        if (selectedPassenger.getAmountToPay().isEmpty()) {
+            Sound.playPassengerAlreadyPaidSfx();
+        } else {
+            Sound.playRetrievePassengerCashSfx();
+            gamePlayFragmentData.getMissionInfoHolder().incrementTotalAmountCollected(selectedPassenger.getAmountWith().getValue());
+            gamePlayTailView.incrementDenominationUnitCount(selectedPassenger.getAmountWith(), (short) 1);
+
+            //decrement amount with
+            selectedPassenger.getAmountWith().decrementValue((short) (selectedPassenger.getAmountWith().getValue() + (selectedPassenger.getAmountWith().getValue() - selectedPassenger.getAmountToPay().getValue())));
+            selectedPassenger.getAmountWith().decrementCount((short) 1);
+
+            //decrement amount to pay
+            selectedPassenger.getAmountToPay().decrementValue(selectedPassenger.getAmountToPay().getValue());
+            selectedPassenger.getAmountToPay().decrementCount((short) 1);
+
+
+            if (selectedPassenger.getAmountWith().getValue() == 0) {
+                gamePlayFragmentData.getMissionInfoHolder().incrementExactFarePassengers(1);
+                if (selectedPassenger.isMale()) {
+                    gamePlayFragmentData.getMissionInfoHolder().incrementNumberOfSettledMales(1);
+                } else {
+                    gamePlayFragmentData.getMissionInfoHolder().incrementNumberOfSettledFemales(1);
+                }
+            }
+        }
     }
 
     @Override
@@ -104,21 +220,13 @@ public class GamePlayFragment extends Fragment {
     }
 
     public void initializeGame() {
-        appData = ApplicationData.getInstance(getActivity());
+        appData = ApplicationData.getInstance();
         initUI();
         init();
     }
 
     protected void initUI() {
-        gridview = (GridView) getView().findViewById(R.id.gridview);
-        gridview.setAdapter(personTileAdapter = new PersonTileAdapter(getActivity()));
         gamePlayHeaderView = (GamePlayHeaderView) getView().findViewById(R.id.game_play_header_view);
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((GamePlayPersonTile) gridview.getAdapter().getItem(position)).onClick(view);
-            }
-        });
         gamePlayTailView = (GamePlayTailView) getView().findViewById(R.id.game_play_tail_view);
         if (gamePlayFragmentData.isMissionMode()) {
             StartMissionDialog startMissionDialog = new StartMissionDialog(getActivity(), getGamePlayFragmentData().getCurrentMission());
@@ -130,9 +238,19 @@ public class GamePlayFragment extends Fragment {
     }
 
     protected void init() {
-        GamePlayTailData gamePlayTailData = GamePlayTailData.newGamePlayTailData(new DefaultConductorWalletDenomination(getActivity()), 0, ShopItem.list(getActivity()).get(appData.getDefaultPowerUp()));
+        if (conductorWallet == null) {
+            conductorWallet = new DefaultConductorWalletDenomination(getActivity());
+        }
+
+        if (gamePlayHeaderData == null) {
+            gamePlayHeaderData = GamePlayHeaderData.newGamePlayHeaderData(true, 0, GamePlayHeaderData.MAX_LIFE, 0);
+        } else {
+            gamePlayHeaderData.reset();
+        }
+
+        GamePlayTailData gamePlayTailData = GamePlayTailData.newGamePlayTailData(conductorWallet, 0, ShopItem.list(getActivity()).get(appData.getDefaultPowerUp()));
         gamePlayTailView.setGamePlayTailData(gamePlayTailData);
-        GamePlayHeaderData gamePlayHeaderData = GamePlayHeaderData.newGamePlayHeaderData(true, 0, GamePlayHeaderData.MAX_LIFE, 0);
+
         gamePlayHeaderView.setGamePlayHeaderData(gamePlayHeaderData);
         loop = getLoop();
     }
@@ -159,14 +277,6 @@ public class GamePlayFragment extends Fragment {
         return gamePlayHeaderView;
     }
 
-    public void setGamePlayHeaderView(GamePlayHeaderView gamePlayHeaderView) {
-        this.gamePlayHeaderView = gamePlayHeaderView;
-    }
-
-    public PersonTileAdapter getPersonTileAdapter() {
-        return personTileAdapter;
-    }
-
     public void showGameplayToast(String message, int drawableId) {
         LayoutInflater inflater = getLayoutInflater(getArguments());
 
@@ -182,12 +292,13 @@ public class GamePlayFragment extends Fragment {
         customtoast.show();
     }
 
-    public GridView getGridView() {
-        return gridview;
+    public PassengersAdapter getPassengersAdapter() {
+        return passengersAdapter;
     }
 
     public class GameLooper extends AsyncTask {
 
+        @SuppressWarnings("WrongThread")
         @Override
         protected Object doInBackground(Object[] params) {
             long lastLoopTime = System.nanoTime();
@@ -223,11 +334,38 @@ public class GamePlayFragment extends Fragment {
                         }
 
                         //Individual Tile Processing
-                        GridView gridView = GamePlayFragment.this.getGridView();
-                        for (int j = gridView.getAdapter().getCount() - 1; j >= 0; j--) {
-                            GamePlayPersonTile tile = (GamePlayPersonTile) gridView.getAdapter().getItem(j);
-                            tile.doGameUpdates(GamePlayFragment.this, delta);
-                            tile.doGameRender(GamePlayFragment.this);
+                        Passenger passenger;
+                        for (int i = 0; i < passengers.size(); i++) {
+
+                            passenger = passengers.get(i);
+
+                            passenger.doGameUpdates(GamePlayFragment.this, delta);
+
+                            passenger.doGameRender(GamePlayFragment.this);
+                            if (passenger.isLowPatienceSignalled()) {
+                                passengersAdapter.update(i, passenger);
+                            }
+                            if (passenger.isRecycle()) {
+
+                                if (!fullPassengersListIterator.hasNext()) {
+                                    fullPassengersListIterator = fullPassengersList.listIterator();
+                                }
+
+                                passenger = fullPassengersListIterator.next();
+                                passenger.recycle();
+
+                                passengers.set(i, passenger);
+                            }
+
+                            passengersAdapter.update(i, passenger);
+                            final int finalI = i;
+                            GamePlayFragment.this.getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    passengersAdapter.notifyItemChanged(finalI);
+                                }
+                            });
+
                         }
 
                         try {

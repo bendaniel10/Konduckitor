@@ -51,17 +51,18 @@ public class HeaderControls extends RelativeLayout {
 
 
     @OnClick(R.id.previous_button)
+    void handlePrevious() {
+        if (!isInEditMode()) {
+            ((AppCommonsActivity) getContext()).onBackPressed();
+        }
+
+    }
+
+    @OnClick(R.id.shop_button)
     void handleShop() {
         if (!isInEditMode()) {
             ShopItemFragment shopItemFragment = new ShopItemFragment();
             ((MainActivity) getContext()).switchFragmentsAddToBackStack(R.id.fragment_container, shopItemFragment);
-        }
-    }
-
-    @OnClick(R.id.shop_button)
-    void handlePrevious() {
-        if (!isInEditMode()) {
-            ((AppCommonsActivity) getContext()).onBackPressed();
         }
     }
 }

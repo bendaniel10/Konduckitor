@@ -16,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.bentechapps.konduckitor.R;
-import com.bentechapps.konduckitor.activity.MainActivity;
 import com.bentechapps.konduckitor.activity.fragments.tutorial.GamePlayTutorialFragment;
 import com.bentechapps.konduckitor.data.ApplicationData;
 import com.bentechapps.konduckitor.model.shop.ShopItem;
@@ -56,7 +55,7 @@ public class GamePlayPauseFragment extends DialogFragment implements View.OnClic
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         gamePlayFragment = (GamePlayFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        appData = ApplicationData.getInstance(getActivity());
+        appData = ApplicationData.getInstance();
         sfxSwitch = (Switch) getView().findViewById(R.id.sfx_switch);
         soundSwitch = (Switch) getView().findViewById(R.id.music_switch);
         defaultPowerUp = (Spinner) getView().findViewById(R.id.default_power_up_spinner);

@@ -85,7 +85,7 @@ public class HomePageFragement extends AppCommonsFragment {
 
     private void initView() {
 
-        appData = ApplicationData.getInstance(getActivity());
+        appData = ApplicationData.getInstance();
 
 
         if (appData.isMusic() && appData.isSfx()) {

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:id="@+id/wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp">
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/progress"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                app:cpb_background_progressbar_color="@color/nearly_white"
+                app:cpb_background_progressbar_width="1dp"
+                app:cpb_progressbar_color="@color/green"
+                app:cpb_progressbar_width="1dp" />
+
+
+            <ImageView
+                android:id="@+id/avatarImg"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/f_angry_1" />
+
+            <TextView
+                android:id="@+id/moneyTxt"
+                style="@style/Text.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/avatarImg"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="+ 200"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/stateImg"
+                android:layout_width="@dimen/state_img_size"
+                android:layout_height="@dimen/state_img_size"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/avatarImg"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/badge"
+                android:layout_alignBottom="@id/moneyTxt"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

@@ -3,11 +3,15 @@ package com.bentechapps.konduckitor.model.shop.impl;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import com.bentech.android.appcommons.utils.DrawableUtils;
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
+import com.bentechapps.konduckitor.app.Constants;
 import com.bentechapps.konduckitor.data.ApplicationData;
+import com.bentechapps.konduckitor.model.person.Passenger;
 import com.bentechapps.konduckitor.model.shop.ShopItem;
-import com.bentechapps.konduckitor.view.GamePlayPersonTile;
+
+import static com.bentechapps.konduckitor.activity.fragments.GamePlayFragment.TARGET_FPS;
 
 /**
  * Created by Daniel on 7/26/2015.
@@ -20,17 +24,17 @@ public class GraGra extends ShopItem {
 
     public GraGra(Context context) {
         super(context);
-        this.appData = ApplicationData.getInstance(context);
+        this.appData = ApplicationData.getInstance();
     }
 
     @Override
     public int getDuration() {
-        return 3 * GamePlayFragment.TARGET_FPS;
+        return (7 -  (Constants.MAX_POWER_UP_UPGRADE_LEVEL - getUpgradeLevel()))  * TARGET_FPS;
     }
 
     @Override
     public String getName() {
-        return "Gra Gra";
+        return context.getString(R.string.gra_gra);
     }
 
     @Override
@@ -40,12 +44,12 @@ public class GraGra extends ShopItem {
 
     @Override
     public Drawable getImage() {
-        return context.getResources().getDrawable(R.drawable.gra_gra);
+        return DrawableUtils.getDrawable(context, R.drawable.gra_gra);
     }
 
     @Override
     public String getDescription() {
-        return "Speeds things up a bit. settled passengers give 2x more score, angry passengers take 2x more health. This doesn't affect play time.";
+        return context.getString(R.string.gra_gra_description, getDuration() / TARGET_FPS);
     }
 
     @Override
@@ -54,15 +58,29 @@ public class GraGra extends ShopItem {
     }
 
     @Override
-    public void execute(GamePlayFragment gamePlayFragment) {
-        if(gamePlayFragment.getGamePlayFragmentData().getPowerUpDuration() == 1) {
+    public void execute(final GamePlayFragment gamePlayFragment) {
+        if (gamePlayFragment.getGamePlayFragmentData().getPowerUpDuration() == 1) {
             gamePlayFragment.getGamePlayFragmentData().getMissionInfoHolder().incrementGraGraUseCount(1);
             gamePlayFragment.getGamePlayFragmentData().setUnsettledPassengerHealthDeduction(gamePlayFragment.getGamePlayFragmentData().getUnsettledPassengerHealthDeduction() * graGraOffset * 2);
             gamePlayFragment.getGamePlayFragmentData().setSettledPassengerRewardPoint(gamePlayFragment.getGamePlayFragmentData().getSettledPassengerRewardPoint() * graGraOffset * 2);
         }
-        for (int j = gamePlayFragment.getGridView().getAdapter().getCount() - 1; j >= 0; j--) {
-            GamePlayPersonTile tile = (GamePlayPersonTile) gamePlayFragment.getGridView().getAdapter().getItem(j);
-            tile.decrementTimeRemaining((short) graGraOffset);
+
+        Passenger passenger;
+        for (int j = gamePlayFragment.getPassengersAdapter().getItemCount() - 1; j >= 0; j--) {
+            passenger = gamePlayFragment.getPassengersAdapter().getItem(j);
+
+            if (passenger.getTimeLeft() < passenger.getExitTime()) {
+                passenger.setTimeLeft((short) (passenger.getTimeLeft() - graGraOffset));
+            }
+
+            final int finalJ = j;
+            gamePlayFragment.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    gamePlayFragment.getPassengersAdapter().notifyItemChanged(finalJ);
+                }
+            });
+
         }
     }
 
@@ -88,5 +106,17 @@ public class GraGra extends ShopItem {
         super.cancelExecution(gamePlayFragment);
         gamePlayFragment.getGamePlayFragmentData().setUnsettledPassengerHealthDeduction(gamePlayFragment.getGamePlayFragmentData().getUnsettledPassengerHealthDeduction() / (graGraOffset * 2));
         gamePlayFragment.getGamePlayFragmentData().setSettledPassengerRewardPoint(gamePlayFragment.getGamePlayFragmentData().getSettledPassengerRewardPoint() / (graGraOffset * 2));
+    }
+
+
+    @Override
+    public void incrementUpgradeLevel(int offset) {
+        super.incrementUpgradeLevel(offset);
+        appData.incrementGraGraLevel(offset);
+    }
+
+    @Override
+    public int getUpgradeLevel() {
+        return appData.getGraGraLevel();
     }
 }

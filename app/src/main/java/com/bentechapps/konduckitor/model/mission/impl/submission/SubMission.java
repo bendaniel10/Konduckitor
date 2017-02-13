@@ -11,24 +11,23 @@ public abstract class SubMission {
     protected MissionInfoHolder missionInfoHolder;
     protected int level;
     protected boolean isComplete;
-    public int factor;
+    public int completedFactor;
     private boolean isUserNotified;
 
     private SubMission() {
     }
 
-    protected SubMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
+    protected SubMission(MissionInfoHolder missionInfoHolder, int level) {
         this.missionInfoHolder = missionInfoHolder;
         this.level = level;
-        this.parentMission = parentMission;
     }
 
-    public int getFactor() {
-        return factor;
+    public int getCompletedFactor() {
+        return completedFactor;
     }
 
-    public SubMission setFactor(int factor) {
-        this.factor = factor;
+    public SubMission setCompletedFactor(int completedFactor) {
+        this.completedFactor = completedFactor;
         return this;
     }
 
@@ -49,9 +48,16 @@ public abstract class SubMission {
     public abstract boolean isGameOverOnSubMissionFail();
 
     public SubMission restartSubMission() {
-        missionInfoHolder = parentMission.getGamePlayFragment().getGamePlayFragmentData().getMissionInfoHolder();
         setIsUserNotified(false);
         isComplete = false;
         return this;
+    }
+
+    public void setParentMission(Mission parentMission) {
+        this.parentMission = parentMission;
+    }
+
+    public Mission getParentMission() {
+        return parentMission;
     }
 }

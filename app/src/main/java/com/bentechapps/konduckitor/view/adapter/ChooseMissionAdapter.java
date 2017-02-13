@@ -30,7 +30,7 @@ public class ChooseMissionAdapter extends BaseAdapter {
     }
 
     private void initMissionItems() {
-        this.missionList = level.listMission(new GamePlayFragment().setGamePlayFragmentData(new GamePlayFragmentData(context)));
+        this.missionList = level.listMission();
     }
 
     @Override
@@ -51,8 +51,8 @@ public class ChooseMissionAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MissionItem missionItem = new MissionItem(context);
-        missionItem.setMission((Mission) getItem(position));
         missionItem.setLevel(level);
+        missionItem.setMission((Mission) getItem(position));
         convertView = missionItem;
         return convertView;
     }

@@ -11,8 +11,9 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
 public class MaintainHealthAtThresholdMission extends SubMission {
 
 
-    public MaintainHealthAtThresholdMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public MaintainHealthAtThresholdMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
+        completedFactor = 20;
     }
 
     @Override
@@ -22,12 +23,12 @@ public class MaintainHealthAtThresholdMission extends SubMission {
 
     @Override
     public boolean isSubMissionCompleted() {
-        return missionInfoHolder.getHealth() >= getFactor() + (level * 10);
+        return missionInfoHolder.getHealth() >= getCompletedFactor() + (level * 10);
     }
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Don't let your health go below %s, %s left", getFactor() +  (level * 10), missionInfoHolder.getHealth());
+        return String.format("Don't let your health go below %s, %s left", getCompletedFactor() +  (level * 10), missionInfoHolder.getHealth());
     }
 
     @Override

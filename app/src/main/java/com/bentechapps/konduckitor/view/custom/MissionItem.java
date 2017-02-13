@@ -11,6 +11,7 @@ import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.MainActivity;
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
 import com.bentechapps.konduckitor.data.ApplicationData;
+import com.bentechapps.konduckitor.data.GamePlayFragmentData;
 import com.bentechapps.konduckitor.model.level.Level;
 import com.bentechapps.konduckitor.model.mission.Mission;
 import com.bentechapps.konduckitor.view.animation.AnimationFactory;
@@ -34,42 +35,52 @@ public class MissionItem extends RelativeLayout implements View.OnClickListener 
 
         lockedImage = (ImageView) findViewById(R.id.locked_image);
         missionNumber = (TextView) findViewById(R.id.mission_number);
-        appData = ApplicationData.getInstance(context);
+        appData = ApplicationData.getInstance();
         passImage = (ImageView) findViewById(R.id.pass_image);
         setOnClickListener(this);
     }
 
     public MissionItem setMission(Mission mission) {
         this.mission = mission;
-        boolean isLocked = mission.getMission() > appData.getCurrentMission();
+        boolean isLocked = (mission.getMission() > appData.getCurrentMission() &&
+                !(level.getLevelNumber() == 1 && mission.getMission() == 1)) ||
+                level.getLevelNumber() > appData.getCurrentLevel();
         lockedImage.setVisibility(isLocked ? VISIBLE : GONE);
         missionNumber.setText(String.valueOf(mission.getMission()));
         missionNumber.setVisibility(!isLocked ? VISIBLE : GONE);
-        passImage.setVisibility(mission.getMission() < appData.getCurrentMission() ? VISIBLE : GONE);
+        passImage.setVisibility(mission.getMission() < appData.getCurrentMission() && level.getLevelNumber() <= appData.getCurrentLevel() ? VISIBLE : GONE);
         return this;
     }
 
     @Override
     public void onClick(View v) {
 
-        if (ApplicationData.getInstance(getContext()).getCurrentMission() < mission.getMission()) {
+        if (ApplicationData.getInstance().getCurrentMission() < mission.getMission()) {
             lockedImage.startAnimation(AnimationFactory.newWobbleAnimation());
         } else {
             MainActivity mainActivity = ((MainActivity) getContext());
-            GamePlayFragment gamePlayFragment = mission.getGamePlayFragment();
+            GamePlayFragment gamePlayFragment = new GamePlayFragment().setGamePlayFragmentData(new GamePlayFragmentData(getContext()));
             gamePlayFragment.getGamePlayFragmentData().setIsMissionMode(true);
+
+            mission.restartMission();
             gamePlayFragment.getGamePlayFragmentData().setCurrentMission(mission);
+
             gamePlayFragment.getGamePlayFragmentData().setCurrentLevel(level);
+
+            level.getMissionInfoHolder().reset();
+            level.getMissionInfoHolder().setScore(0);//above doesn't reset score see doc.
+
+            gamePlayFragment.getGamePlayFragmentData().setMissionInfoHolder(level.getMissionInfoHolder());
 
             mainActivity.switchFragmentsAddToBackStack(R.id.fragment_container, gamePlayFragment);
         }
     }
 
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
     public Level getLevel() {
         return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 }

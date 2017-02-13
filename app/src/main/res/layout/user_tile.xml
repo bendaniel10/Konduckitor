@@ -73,7 +73,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/individual_user_tile"
             android:scaleType="centerInside"
-            android:src="@drawable/male_one" />
+            android:src="@drawable/m_angry_1" />
     </LinearLayout>
 
 </RelativeLayout>

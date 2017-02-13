@@ -10,8 +10,9 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
  */
 public class TargetScoreMission extends SubMission {
 
-    public TargetScoreMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public TargetScoreMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
+        this.completedFactor = 500;
     }
 
     @Override
@@ -21,12 +22,12 @@ public class TargetScoreMission extends SubMission {
 
     @Override
     public boolean isSubMissionCompleted() {
-        return missionInfoHolder.getScore() >= getFactor() * level;
+        return missionInfoHolder.getScore() >= getCompletedFactor() * level;
     }
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Score at least %s, %s scored", getFactor() * level, missionInfoHolder.getScore());
+        return String.format("Score at least %s, %s scored", getCompletedFactor() * level, missionInfoHolder.getScore());
     }
 
     @Override

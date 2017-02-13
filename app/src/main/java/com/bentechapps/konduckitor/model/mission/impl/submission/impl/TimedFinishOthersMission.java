@@ -9,8 +9,9 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
  * Created by Daniel on 4/29/2015.
  */
 public class TimedFinishOthersMission extends SubMission {
-    public TimedFinishOthersMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public TimedFinishOthersMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
+        completedFactor = 400;
     }
 
     @Override
@@ -25,12 +26,12 @@ public class TimedFinishOthersMission extends SubMission {
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Finish other missions in %s seconds, %s seconds remaining", getFactor() + (100 * level) , getFactor() + (100 * level) - missionInfoHolder.getGamePlayTime());
+        return String.format("Finish other missions in %s seconds, %s seconds remaining", getCompletedFactor() + (100 * level) , getCompletedFactor() + (100 * level) - missionInfoHolder.getGamePlayTime());
     }
 
     @Override
     public boolean isGameOverOnSubMissionFail() {
-        return missionInfoHolder.getGamePlayTime() >= getFactor()  + (100 * level);
+        return missionInfoHolder.getGamePlayTime() >= getCompletedFactor()  + (100 * level);
     }
 
     private boolean isOnlyOneMissionLeftToComplete() {

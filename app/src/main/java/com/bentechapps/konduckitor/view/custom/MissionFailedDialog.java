@@ -80,7 +80,7 @@ public class MissionFailedDialog extends Dialog implements View.OnClickListener 
 
         super.onCreate(savedInstanceState);
 
-        appData = ApplicationData.getInstance(getContext());
+        appData = ApplicationData.getInstance();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.mission_failed_dialog);
         restartButton = (ImageButton) findViewById(R.id.restart_button);

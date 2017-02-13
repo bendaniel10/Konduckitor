@@ -10,8 +10,9 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
  */
 public class AllowPassengerEscapeMission extends SubMission {
 
-    public AllowPassengerEscapeMission(MissionInfoHolder missionInfoHolder, int level, Mission parentMission) {
-        super(missionInfoHolder, level, parentMission);
+    public AllowPassengerEscapeMission(MissionInfoHolder missionInfoHolder, int level) {
+        super(missionInfoHolder, level);
+        completedFactor = 3;
     }
 
     @Override
@@ -21,12 +22,12 @@ public class AllowPassengerEscapeMission extends SubMission {
 
     @Override
     public boolean isSubMissionCompleted() {
-        return isComplete || (isComplete = missionInfoHolder.getEscapedPassengers() >= getFactor() * level);
+        return isComplete || (isComplete = missionInfoHolder.getEscapedPassengers() >= getCompletedFactor() * level);
     }
 
     @Override
     public String getSubMissionDescription() {
-        return String.format("Allow %s passengers escape without paying, %s allowed", getFactor() * level, missionInfoHolder.getEscapedPassengers());
+        return String.format("Allow %s passengers escape without paying, %s allowed", getCompletedFactor() * level, missionInfoHolder.getEscapedPassengers());
     }
 
     @Override

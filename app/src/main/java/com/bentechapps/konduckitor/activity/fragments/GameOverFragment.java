@@ -1,17 +1,12 @@
 package com.bentechapps.konduckitor.activity.fragments;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.MainActivity;
@@ -94,7 +89,7 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        appData = ApplicationData.getInstance(getActivity());
+        appData = ApplicationData.getInstance();
         this.mainActivity = (MainActivity) getActivity();
         runtimeTextView = (TextView) getView().findViewById(R.id.runTimeTextView);
         pointsTextView = (TextView) getView().findViewById(R.id.scoreTextView);

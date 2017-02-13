@@ -113,7 +113,7 @@ public class PauseGameDialog extends Dialog implements View.OnClickListener, Ada
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        appData = ApplicationData.getInstance(getContext());
+        appData = ApplicationData.getInstance();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pause_game_dialog);
         missionList = (ListView) findViewById(R.id.mission_list);
