@@ -50,6 +50,7 @@ public class GamePlayFragment extends AppCommonsFragment {
     public static final int TARGET_FPS = 10;
     public static final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
     private static final String TAG = GamePlayFragment.class.getSimpleName();
+    private static final String GAME_PLAY_FRAGMENT_DATA = "GAME_PLAY_FRAGMENT_DATA";
     protected GamePlayHeaderView gamePlayHeaderView;
     protected GameLooper loop;
     protected GamePlayFragmentData gamePlayFragmentData;
@@ -64,29 +65,47 @@ public class GamePlayFragment extends AppCommonsFragment {
     private DefaultConductorWalletDenomination conductorWallet;
     private GamePlayHeaderData gamePlayHeaderData;
 
-    public static void handleRestartAndNextMissionInit(GamePlayFragment gamePlayFragment) {
-        GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData(gamePlayFragment.getActivity());
+
+    public static void handleRestartAndNextMissionInit(GamePlayFragment gamePlayFragment, boolean fullRestart) {
+        GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData();
         if (gamePlayFragment.getGamePlayFragmentData().isMissionMode()) {
             gamePlayFragmentData.setCurrentLevel(gamePlayFragment.getGamePlayFragmentData().getCurrentLevel());
-            gamePlayFragmentData.getCurrentLevel().getMissionInfoHolder().reset();
+            gamePlayFragmentData.getCurrentLevel().getMissionInfoHolder().resetAllExceptScore();
             gamePlayFragmentData.setMissionInfoHolder(gamePlayFragmentData.getCurrentLevel().getMissionInfoHolder());
             gamePlayFragmentData.setCurrentMission(gamePlayFragment.getGamePlayFragmentData().getCurrentMission());
             gamePlayFragmentData.setIsMissionMode(true);
         }
-        gamePlayFragment.setGamePlayFragmentData(gamePlayFragmentData);
+
+        //Todo review and remove this if not necessary.
+        if (gamePlayFragment.getArguments() != null) {
+            gamePlayFragment.getArguments().putSerializable(GAME_PLAY_FRAGMENT_DATA, gamePlayFragmentData);
+        }
+
         if (gamePlayFragmentData.isMissionMode()) {
-            gamePlayFragmentData.setCurrentMission(gamePlayFragment.getGamePlayFragmentData().getCurrentMission().restartMission());
+            gamePlayFragmentData.setCurrentMission(gamePlayFragmentData.getCurrentMission().restartMission());
+        }
+
+        if (fullRestart) {
+            for (Passenger passenger : gamePlayFragment.passengers) {
+                passenger.recycle();
+            }
         }
 
     }
 
-    public GamePlayFragmentData getGamePlayFragmentData() {
-        return gamePlayFragmentData;
+    public static GamePlayFragment newInstance(GamePlayFragmentData gamePlayFragmentData) {
+
+        Bundle args = new Bundle();
+
+        args.putSerializable(GAME_PLAY_FRAGMENT_DATA, gamePlayFragmentData);
+
+        GamePlayFragment fragment = new GamePlayFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
-    public GamePlayFragment setGamePlayFragmentData(GamePlayFragmentData gamePlayFragmentData) {
-        this.gamePlayFragmentData = gamePlayFragmentData;
-        return this;
+    public GamePlayFragmentData getGamePlayFragmentData() {
+        return gamePlayFragmentData;
     }
 
     public GameLooper getLoop() {
@@ -110,6 +129,10 @@ public class GamePlayFragment extends AppCommonsFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null && getArguments().getSerializable(GAME_PLAY_FRAGMENT_DATA) != null) {
+            this.gamePlayFragmentData = (GamePlayFragmentData) getArguments().getSerializable(GAME_PLAY_FRAGMENT_DATA);
+        }
     }
 
     @Override
@@ -129,6 +152,14 @@ public class GamePlayFragment extends AppCommonsFragment {
         passengersRecyclerView.setAdapter(passengersAdapter);
         passengersRecyclerView.setLayoutManager(new GridLayoutManager(appCommonsActivity, 4));
         return rootView;
+    }
+
+    List<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    List<Passenger> getFullPassengersList() {
+        return fullPassengersList;
     }
 
     private View.OnClickListener onPassengerClicked() {
@@ -171,6 +202,7 @@ public class GamePlayFragment extends AppCommonsFragment {
         if (selectedPassenger.getAmountWith().getValue() > 0) {
             //punish player for giving more change than expected
             gamePlayHeaderView.decrementLife(Constants.EXCESS_CHANGE_PENALTY);
+            gamePlayFragmentData.getMissionInfoHolder().incrementNumberOfOverpaidPassengers(1);
         }
 
         if (selectedPassenger.getAmountWith().getValue() >= 0 && selectedPassenger.getPassengerState() != PassengerState.SETTLED) {

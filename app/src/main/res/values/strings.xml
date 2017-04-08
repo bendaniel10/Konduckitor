@@ -85,4 +85,14 @@
     <string name="you_do_not_have_enough_money">You do not have enough money</string>
     <string name="upgrade">Upgrade</string>
     <string name="maximum_upgrade_reached">Maximum upgrade reached</string>
+    <string name="big_wallet_description">Start any mission with a big wallet that has at least 100 of each denomination</string>
+    <string name="big_wallet">Big wallet</string>
+    <string name="extra_power_up_slot_description">This is a one time purchase. It gives an extra power up slot during missions</string>
+    <string name="extra_power_up_slot">Extra power up slot</string>
+    <string name="silver_starter_pack_description">Get 5 of each power up a discounted price.</string>
+    <string name="gold_starter_pack_description">Get 10 of each power up a discounted price.</string>
+    <string name="silver_starter_pack">Silver starter pack</string>
+    <string name="gold_starter_pack">Gold starter pack</string>
+    <string name="power_ups">Power ups</string>
+    <string name="items">Items</string>
 </resources>

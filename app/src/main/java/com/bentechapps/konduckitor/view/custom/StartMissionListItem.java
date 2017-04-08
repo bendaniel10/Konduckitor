@@ -1,11 +1,14 @@
 package com.bentechapps.konduckitor.view.custom;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bentech.android.appcommons.utils.DrawableUtils;
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.model.mission.impl.submission.SubMission;
 
@@ -35,21 +38,13 @@ public class StartMissionListItem extends RelativeLayout {
 
     public StartMissionListItem setSubMission(SubMission subMission) {
         this.subMission = subMission;
-        subMissionImage.setImageDrawable(getResources().getDrawable(subMission.getSubMissionDrawable()));
+        subMissionImage.setImageDrawable(DrawableUtils.getDrawable(getContext(), subMission.getSubMissionDrawable()));
         if(isShowFullDetails) {
             subMissionDesc.setText(subMission.getSubMissionDescription());
             if(subMission.isSubMissionCompleted()) {
-                if (android.os.Build.VERSION.SDK_INT >= 16) {
-                    subMissionDesc.setBackground(getResources().getDrawable(R.color.light_green));
-                } else {
-                    subMissionDesc.setBackgroundDrawable(getResources().getDrawable(R.color.light_green));
-                }
+                DrawableUtils.setBackgroundDrawable(subMissionDesc, new ColorDrawable(ContextCompat.getColor(getContext(), R.color.light_green)));
             } else {
-                if (android.os.Build.VERSION.SDK_INT >= 16) {
-                    subMissionDesc.setBackground(getResources().getDrawable(R.color.light_red));
-                } else {
-                    subMissionDesc.setBackgroundDrawable(getResources().getDrawable(R.color.light_red));
-                }
+                DrawableUtils.setBackgroundDrawable(subMissionDesc, new ColorDrawable(ContextCompat.getColor(getContext(), R.color.light_red)));
             }
         } else {
             subMissionDesc.setText(subMission.getSubMissionDescription().split(",")[0]);

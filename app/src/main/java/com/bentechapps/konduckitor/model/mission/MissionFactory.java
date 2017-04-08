@@ -11,6 +11,7 @@ import com.bentechapps.konduckitor.model.mission.impl.submission.impl.GiveChange
 import com.bentechapps.konduckitor.model.mission.impl.submission.impl.MaintainAngryPassengersMission;
 import com.bentechapps.konduckitor.model.mission.impl.submission.impl.MaintainHealthAtThresholdMission;
 import com.bentechapps.konduckitor.model.mission.impl.submission.impl.MaintainHealthForTimeMission;
+import com.bentechapps.konduckitor.model.mission.impl.submission.impl.OverPayPassengersSubMission;
 import com.bentechapps.konduckitor.model.mission.impl.submission.impl.PlayTimeMission;
 import com.bentechapps.konduckitor.model.mission.impl.submission.impl.SettleFemalesMission;
 import com.bentechapps.konduckitor.model.mission.impl.submission.impl.SettleMalesMission;
@@ -33,7 +34,6 @@ import java.util.List;
 public class MissionFactory {
 
     private static MissionBuilder missionBuilder;
-    private static List<Mission> missions;
 
     private synchronized static MissionBuilder builder(Level level) {
         if (missionBuilder == null) {
@@ -50,11 +50,7 @@ public class MissionFactory {
 
     public static List<Mission> listMissions(Level level) {
 
-        if (missions != null) {
-            return missions;
-        }
-
-        missions = new ArrayList<>(Constants.MAX_LEVEL);
+        List<Mission> missions = new ArrayList<>(Constants.MAX_LEVEL);
 
         builder(level);
 
@@ -143,7 +139,8 @@ public class MissionFactory {
         recycleBuilder(level);
         missionBuilder.withMissionNumber(missionNumber++)
                 .withSubMissions(Arrays.asList(
-                        new BeatHighScoreSubMission(level.getMissionInfoHolder(), level.getLevelNumber()),
+                        new OverPayPassengersSubMission(level.getMissionInfoHolder(), level.getLevelNumber())
+                                .setCompletedFactor(4),
                         new MaintainHealthAtThresholdMission(level.getMissionInfoHolder(), level.getLevelNumber())
                                 .setCompletedFactor(30),
                         new MaintainAngryPassengersMission(level.getMissionInfoHolder(), level.getLevelNumber())
@@ -170,7 +167,8 @@ public class MissionFactory {
                                 .setCompletedFactor(8),
                         new AllowPassengerEscapeMission(level.getMissionInfoHolder(), level.getLevelNumber())
                                 .setCompletedFactor(5),
-                        new BeatHighScoreSubMission(level.getMissionInfoHolder(), level.getLevelNumber())
+                        new OverPayPassengersSubMission(level.getMissionInfoHolder(), level.getLevelNumber())
+                                .setCompletedFactor(6)
                 ));
         missions.add(missionBuilder.build());
 

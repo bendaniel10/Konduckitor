@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.MainActivity;
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
-import com.bentechapps.konduckitor.activity.fragments.ShopItemFragment;
+import com.bentechapps.konduckitor.activity.fragments.StoreFragment;
 import com.bentechapps.konduckitor.data.ApplicationData;
 import com.bentechapps.konduckitor.sound.Sound;
 import com.bentechapps.konduckitor.view.adapter.StartMissionDialogAdapter;
@@ -61,7 +61,7 @@ public class MissionFailedDialog extends Dialog implements View.OnClickListener 
     }
 
     private void handleRestartButton() {
-        GamePlayFragment.handleRestartAndNextMissionInit(gamePlayFragment);
+        GamePlayFragment.handleRestartAndNextMissionInit(gamePlayFragment, true);
         gamePlayFragment.initializeGame();
         Sound.playReplaySfx();
     }
@@ -69,8 +69,7 @@ public class MissionFailedDialog extends Dialog implements View.OnClickListener 
     private void handleShop() {
         gamePlayFragment.getActivity().getSupportFragmentManager().popBackStack();
         gamePlayFragment.getActivity().getSupportFragmentManager().popBackStack();
-        ShopItemFragment shopItemFragment = new ShopItemFragment();
-        ((MainActivity) gamePlayFragment.getActivity()).switchFragments(R.id.fragment_container, shopItemFragment);
+        ((MainActivity) gamePlayFragment.getActivity()).switchFragments(R.id.fragment_container, new StoreFragment());
 
     }
 

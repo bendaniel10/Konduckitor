@@ -26,7 +26,7 @@ public class Comedian extends ShopItem {
 
     @Override
     public int getDuration() {
-        return (8 - (Constants.MAX_POWER_UP_UPGRADE_LEVEL - getUpgradeLevel())) * GamePlayFragment.TARGET_FPS;
+        return (10 - (Constants.MAX_POWER_UP_UPGRADE_LEVEL - getUpgradeLevel())) * GamePlayFragment.TARGET_FPS;
     }
 
     @Override
@@ -99,7 +99,6 @@ public class Comedian extends ShopItem {
 
     @Override
     public void incrementUpgradeLevel(int offset) {
-        super.incrementUpgradeLevel(offset);
         appData.incrementComedianLevel(offset);
     }
 

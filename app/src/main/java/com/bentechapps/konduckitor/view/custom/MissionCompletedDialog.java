@@ -14,7 +14,7 @@ import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.MainActivity;
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
 import com.bentechapps.konduckitor.activity.fragments.HomePageFragement;
-import com.bentechapps.konduckitor.activity.fragments.ShopItemFragment;
+import com.bentechapps.konduckitor.activity.fragments.StoreFragment;
 import com.bentechapps.konduckitor.data.ApplicationData;
 import com.bentechapps.konduckitor.data.GamePlayFragmentData;
 import com.bentechapps.konduckitor.model.level.Level;
@@ -68,7 +68,7 @@ public class MissionCompletedDialog extends Dialog implements View.OnClickListen
     }
 
     private void handleRestartButton() {
-        GamePlayFragment.handleRestartAndNextMissionInit(gamePlayFragment);
+        GamePlayFragment.handleRestartAndNextMissionInit(gamePlayFragment, true);
         gamePlayFragment.initializeGame();
     }
 
@@ -76,13 +76,12 @@ public class MissionCompletedDialog extends Dialog implements View.OnClickListen
         GamePlayFragmentData gamePlayFragmentData = gamePlayFragment.getGamePlayFragmentData();
         gamePlayFragmentData.setCurrentMission(Mission.getMission(gamePlayFragment));
         gamePlayFragmentData.setCurrentLevel(Level.getCurrentLevel(getContext()));
-        GamePlayFragment.handleRestartAndNextMissionInit(gamePlayFragment);
+        GamePlayFragment.handleRestartAndNextMissionInit(gamePlayFragment, false);
         gamePlayFragment.initializeGame();
     }
 
     private void handleShop() {
-        ShopItemFragment shopItemFragment = new ShopItemFragment();
-        ((MainActivity) gamePlayFragment.getActivity()).switchFragments(R.id.fragment_container, shopItemFragment);
+        ((MainActivity) gamePlayFragment.getActivity()).switchFragments(R.id.fragment_container, new StoreFragment());
 
     }
 

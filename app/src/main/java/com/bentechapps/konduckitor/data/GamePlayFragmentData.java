@@ -1,15 +1,15 @@
 package com.bentechapps.konduckitor.data;
 
-import android.content.Context;
-
 import com.bentechapps.konduckitor.model.level.Level;
 import com.bentechapps.konduckitor.model.mission.Mission;
 import com.bentechapps.konduckitor.model.mission.MissionInfoHolder;
 
+import java.io.Serializable;
+
 /**
  * Created by BenTech on 2/8/2015.
  */
-public class GamePlayFragmentData {
+public class GamePlayFragmentData implements Serializable {
     private MissionInfoHolder missionInfoHolder;
     private boolean isPowerUpMode;
     private int powerUpDuration;
@@ -19,10 +19,7 @@ public class GamePlayFragmentData {
     private int unsettledPassengerHealthDeduction;
     private int settledPassengerRewardPoint;
 
-    private GamePlayFragmentData() {
-    }
-
-    public GamePlayFragmentData(Context context) {
+    public GamePlayFragmentData() {
         setUnsettledPassengerHealthDeduction(1);
         setSettledPassengerRewardPoint(1);
     }
@@ -37,6 +34,10 @@ public class GamePlayFragmentData {
 
     public int getPowerUpDuration() {
         return powerUpDuration;
+    }
+
+    public void setPowerUpDuration(int powerUpDuration) {
+        this.powerUpDuration = powerUpDuration;
     }
 
     public int incrementPowerUpDuration(int powerUpDuration) {
@@ -59,10 +60,6 @@ public class GamePlayFragmentData {
         this.isMissionMode = isMissionMode;
     }
 
-    public void setPowerUpDuration(int powerUpDuration) {
-        this.powerUpDuration = powerUpDuration;
-    }
-
     public MissionInfoHolder getMissionInfoHolder() {
         return missionInfoHolder;
     }
@@ -73,28 +70,27 @@ public class GamePlayFragmentData {
         this.missionInfoHolder = missionInfoHolder;
     }
 
-    public void setCurrentLevel(Level currentLevel) {
-        this.currentLevel = currentLevel;
-    }
-
     public Level getCurrentLevel() {
         return currentLevel;
     }
 
-    public void setUnsettledPassengerHealthDeduction(int unsettledPassengerHealthDeduction) {
-        this.unsettledPassengerHealthDeduction = unsettledPassengerHealthDeduction;
+    public void setCurrentLevel(Level currentLevel) {
+        this.currentLevel = currentLevel;
     }
 
     public int getUnsettledPassengerHealthDeduction() {
         return unsettledPassengerHealthDeduction;
     }
 
-
-    public void setSettledPassengerRewardPoint(int settledPassengerRewardPoint) {
-        this.settledPassengerRewardPoint = settledPassengerRewardPoint;
+    public void setUnsettledPassengerHealthDeduction(int unsettledPassengerHealthDeduction) {
+        this.unsettledPassengerHealthDeduction = unsettledPassengerHealthDeduction;
     }
 
     public int getSettledPassengerRewardPoint() {
         return settledPassengerRewardPoint;
+    }
+
+    public void setSettledPassengerRewardPoint(int settledPassengerRewardPoint) {
+        this.settledPassengerRewardPoint = settledPassengerRewardPoint;
     }
 }

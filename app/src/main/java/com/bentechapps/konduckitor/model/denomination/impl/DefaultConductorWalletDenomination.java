@@ -18,10 +18,10 @@ import java.util.Random;
 public class DefaultConductorWalletDenomination extends Denomination {
 
     private ApplicationData appData;
-    Random random;
+    private Random random;
     private int MINIMUM_EASY_COUNT = 15;
-    private int MINIMUM_NORMAL_COUNT = 10;
-    private int MINIMUM_HARD_COUNT = 10;
+    private int MINIMUM_NORMAL_COUNT = 20;
+    private int MINIMUM_HARD_COUNT = 15;
     private int MINIMUM_COUNT = MINIMUM_NORMAL_COUNT;
 
     private DefaultConductorWalletDenomination() {

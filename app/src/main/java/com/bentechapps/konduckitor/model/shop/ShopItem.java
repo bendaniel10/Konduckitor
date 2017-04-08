@@ -27,7 +27,6 @@ public abstract class ShopItem implements GameLoopItem {
     protected Context context;
     protected int duration;
     protected String name;
-    private int upgradeLevel;
 
     private ShopItem() {
     }
@@ -41,10 +40,6 @@ public abstract class ShopItem implements GameLoopItem {
     }
 
     public abstract int getUpgradeLevel();
-
-    public void setUpgradeLevel(int upgradeLevel) {
-        this.upgradeLevel = upgradeLevel;
-    }
 
     public abstract int getDuration();
 
@@ -128,7 +123,5 @@ public abstract class ShopItem implements GameLoopItem {
         this.have += offset;
     }
 
-    public void incrementUpgradeLevel(int offset) {
-        this.upgradeLevel += offset;
-    }
+    public abstract void incrementUpgradeLevel(int offset) ;
 }

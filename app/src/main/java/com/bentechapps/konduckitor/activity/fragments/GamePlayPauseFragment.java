@@ -16,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.bentechapps.konduckitor.R;
-import com.bentechapps.konduckitor.activity.fragments.tutorial.GamePlayTutorialFragment;
 import com.bentechapps.konduckitor.data.ApplicationData;
 import com.bentechapps.konduckitor.model.shop.ShopItem;
 import com.bentechapps.konduckitor.sound.Sound;
@@ -77,12 +76,8 @@ public class GamePlayPauseFragment extends DialogFragment implements View.OnClic
         soundSwitch.setChecked(appData.isMusic());
         defaultPowerUp.setSelection(appData.getDefaultPowerUp());
 
+        skipTutorialButton.setVisibility(View.GONE);
 
-        if (gamePlayFragment instanceof GamePlayTutorialFragment) {
-            homeButton.setVisibility(View.GONE);
-        } else {
-            skipTutorialButton.setVisibility(View.GONE);
-        }
     }
 
     @Override
@@ -145,34 +140,6 @@ public class GamePlayPauseFragment extends DialogFragment implements View.OnClic
             case R.id.resumeGameButton:
                 handleResumeGame();
                 break;
-            case R.id.skipTutorial:
-                handleSkipTutorial();
-        }
-    }
-
-    private void handleSkipTutorial() {
-        if (gamePlayFragment instanceof GamePlayTutorialFragment) {
-            Sound.playButtonClickSfx();
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Exit tutorial? You can always replay this tutorial from the help menu.");
-            builder.setTitle("Confirm exit");
-            builder.setPositiveButton("Exit Tutorial", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    getDialog().dismiss();
-                    appData.setPlayTutorial(0);
-                    (getActivity()).getSupportFragmentManager().popBackStack();
-                }
-            });
-            builder.setNegativeButton("Stay in game", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    gamePlayFragment.getGamePlayHeaderView().getGamePlayHeaderData().setPaused(!gamePlayFragment.getGamePlayHeaderView().getGamePlayHeaderData().isPaused());
-                    gamePlayFragment.getGamePlayHeaderView().updatePauseView();
-                    getDialog().dismiss();
-                }
-            });
-            builder.show();
         }
     }
 

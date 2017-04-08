@@ -18,7 +18,7 @@ import static com.bentechapps.konduckitor.activity.fragments.GamePlayFragment.TA
  */
 public class GraGra extends ShopItem {
 
-    private final int graGraOffset = 3;
+    private final int graGraOffset = 2;
 
     private final ApplicationData appData;
 
@@ -29,7 +29,7 @@ public class GraGra extends ShopItem {
 
     @Override
     public int getDuration() {
-        return (7 -  (Constants.MAX_POWER_UP_UPGRADE_LEVEL - getUpgradeLevel()))  * TARGET_FPS;
+        return (6 -  (Constants.MAX_POWER_UP_UPGRADE_LEVEL - getUpgradeLevel()))  * TARGET_FPS;
     }
 
     @Override
@@ -111,7 +111,6 @@ public class GraGra extends ShopItem {
 
     @Override
     public void incrementUpgradeLevel(int offset) {
-        super.incrementUpgradeLevel(offset);
         appData.incrementGraGraLevel(offset);
     }
 

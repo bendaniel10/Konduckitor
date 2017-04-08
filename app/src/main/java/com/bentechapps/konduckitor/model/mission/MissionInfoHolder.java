@@ -1,8 +1,8 @@
 package com.bentechapps.konduckitor.model.mission;
 
-import com.bentechapps.konduckitor.data.GamePlayHeaderData;
-
 import java.io.Serializable;
+
+import static com.bentechapps.konduckitor.data.GamePlayHeaderData.MAX_LIFE;
 
 /**
  * Created by Daniel on 4/10/2015.
@@ -33,9 +33,10 @@ public class MissionInfoHolder implements Serializable {
     private int fiftiesUseCount;
     private int hundredsUseCount;
     private int fivesUseCount;
+    private int numberOfOverpaidPassengers;
 
     public MissionInfoHolder() {
-        setHealth(GamePlayHeaderData.MAX_LIFE);
+        setHealth(MAX_LIFE);
     }
 
     public int incrementTotalAmountCollected(int offset) {
@@ -46,8 +47,10 @@ public class MissionInfoHolder implements Serializable {
         return this.totalAmountPaidOut += offset;
     }
 
-    public int incrementHealth(int offset) {
-        return this.health += offset;
+    public int incrementHealth(int health) {
+        this.health += health;
+        this.health = Math.min(MAX_LIFE, this.health);
+        return this.health;
     }
 
     public int decrementHealth(int offset) {
@@ -255,12 +258,12 @@ public class MissionInfoHolder implements Serializable {
     }
 
     /**
-     * Doesn't reset score. To enable stacking scores that will assist in creating highscores when multiple missions are
+     * Doesn't resetAllExceptScore score. To enable stacking scores that will assist in creating highscores when multiple missions are
      * completed in succession.
      */
-    public void reset() {
+    public void resetAllExceptScore() {
         gamePlayTime = 0;
-        setHealth(GamePlayHeaderData.MAX_LIFE);
+        setHealth(MAX_LIFE);
 
         //for continuity, this will help stack scores to beat high score in missions.
 //        score = 0;
@@ -285,5 +288,18 @@ public class MissionInfoHolder implements Serializable {
         fiftiesUseCount = 0;
         hundredsUseCount = 0;
         fivesUseCount = 0;
+        numberOfOverpaidPassengers = 0;
+    }
+
+    public int getNumberOfOverpaidPassengers() {
+        return numberOfOverpaidPassengers;
+    }
+
+    public void setNumberOfOverpaidPassengers(int numberOfOverpaidPassengers) {
+        this.numberOfOverpaidPassengers = numberOfOverpaidPassengers;
+    }
+
+    public void incrementNumberOfOverpaidPassengers(int numberOfOverpaidPassengersOffset) {
+        this.numberOfOverpaidPassengers += numberOfOverpaidPassengersOffset;
     }
 }

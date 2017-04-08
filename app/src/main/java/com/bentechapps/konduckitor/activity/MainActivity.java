@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.bentech.android.appcommons.activity.AppCommonsActivity;
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.fragments.GamePlayFragment;
 import com.bentechapps.konduckitor.activity.fragments.HomePageFragement;
-import com.bentechapps.konduckitor.activity.fragments.tutorial.GamePlayTutorialFragment;
 import com.bentechapps.konduckitor.sound.Sound;
 
 
@@ -30,6 +30,8 @@ public class MainActivity extends AppCommonsActivity {
         toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         hideToolBar();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
     }
 
     @Override
@@ -51,11 +53,6 @@ public class MainActivity extends AppCommonsActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                if (fragmentContainer instanceof GamePlayTutorialFragment) {
-                    if (((GamePlayTutorialFragment) fragmentContainer).getShowcaseView().isShown()) {
-                        ((GamePlayTutorialFragment) fragmentContainer).getShowcaseView().hide();
-                    }
-                }
                 MainActivity.super.onBackPressed();
                 ((GamePlayFragment) fragmentContainer).getLoop().cancel(true);
                 ((GamePlayFragment) fragmentContainer).setLoop(null);

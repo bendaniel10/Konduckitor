@@ -1,7 +1,5 @@
 package com.bentechapps.konduckitor.activity.fragments;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +12,8 @@ import com.bentech.android.appcommons.fragment.AppCommonsFragment;
 import com.bentech.android.appcommons.utils.CurrencyUtils;
 import com.bentech.android.appcommons.utils.DrawableUtils;
 import com.bentechapps.konduckitor.R;
-import com.bentechapps.konduckitor.activity.fragments.tutorial.GamePlayTutorialFragment;
 import com.bentechapps.konduckitor.app.Constants;
 import com.bentechapps.konduckitor.data.ApplicationData;
-import com.bentechapps.konduckitor.data.GamePlayFragmentData;
 import com.bentechapps.konduckitor.sound.Sound;
 
 import butterknife.BindView;
@@ -64,7 +60,7 @@ public class HomePageFragement extends AppCommonsFragment {
 
     @OnClick(R.id.shopButton)
     void shopButtonAction() {
-        appCommonsActivity.switchFragmentsAddToBackStack(R.id.fragment_container, new ShopItemFragment());
+        appCommonsActivity.switchFragmentsAddToBackStack(R.id.fragment_container, new StoreFragment());
     }
 
     @OnClick(R.id.settingsBtn)
@@ -95,35 +91,6 @@ public class HomePageFragement extends AppCommonsFragment {
         }
 
         moneyTxt.setText(CurrencyUtils.formatToCurrencyWithSymbol((double) appData.getReputation(), Constants.CURRENCY_SYMBOL));
-    }
-
-
-    @Deprecated
-    private void handleRate() {
-        final String appPackageName = getActivity().getPackageName(); // getPackageName() from Context or Activity object
-        try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-        } catch (android.content.ActivityNotFoundException anfe) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-        }
-    }
-
-    @Deprecated
-    private void handlePlay() {
-        GamePlayFragment gamePlayFragment = appData.getPlayTutorial() == 1 ? new GamePlayTutorialFragment() : new GamePlayFragment();
-        GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData(getActivity());
-        gamePlayFragment.setGamePlayFragmentData(gamePlayFragmentData);
-
-        appCommonsActivity.switchFragmentsAddToBackStack(R.id.fragment_container, gamePlayFragment);
-    }
-
-    @Deprecated
-    private void handleHelp() {
-        GamePlayFragment gamePlayFragment = new GamePlayTutorialFragment();
-        GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData(getActivity());
-        gamePlayFragment.setGamePlayFragmentData(gamePlayFragmentData);
-
-        appCommonsActivity.switchFragmentsAddToBackStack(R.id.fragment_container, gamePlayFragment);
     }
 
 

@@ -100,7 +100,6 @@ public class CalmDown extends ShopItem {
 
     @Override
     public void incrementUpgradeLevel(int offset) {
-        super.incrementUpgradeLevel(offset);
         appData.incrementCalmDownLevel(offset);
     }
 

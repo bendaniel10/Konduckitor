@@ -81,7 +81,7 @@ public class PauseGameDialog extends Dialog implements View.OnClickListener, Ada
         //restart fragment hack :-)
         this.dismiss();
         GamePlayFragment gamePlayFragment = (GamePlayFragment) ((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        GamePlayFragment.handleRestartAndNextMissionInit(gamePlayFragment);
+        GamePlayFragment.handleRestartAndNextMissionInit(gamePlayFragment, true);
         gamePlayFragment.initializeGame();
     }
 

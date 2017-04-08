@@ -73,4 +73,9 @@ public class AssistantConductor extends ShopItem {
     public void incrementHave(int offset) {
 
     }
+
+    @Override
+    public void incrementUpgradeLevel(int offset) {
+
+    }
 }

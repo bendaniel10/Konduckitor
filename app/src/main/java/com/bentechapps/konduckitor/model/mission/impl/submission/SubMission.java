@@ -3,10 +3,12 @@ package com.bentechapps.konduckitor.model.mission.impl.submission;
 import com.bentechapps.konduckitor.model.mission.Mission;
 import com.bentechapps.konduckitor.model.mission.MissionInfoHolder;
 
+import java.io.Serializable;
+
 /**
  * Created by Daniel on 4/12/2015.
  */
-public abstract class SubMission {
+public abstract class SubMission implements Serializable{
     protected Mission parentMission;
     protected MissionInfoHolder missionInfoHolder;
     protected int level;

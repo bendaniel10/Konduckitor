@@ -38,6 +38,8 @@ public class ApplicationData extends Preference {
     private int comedianLevel;
     private int graGraCount = 5;
     private int graGraLevel;
+    private int bigWalletItemCount;
+    private int extraPowerUpSlotItemCount;
 
 
     public ApplicationData() {
@@ -301,5 +303,37 @@ public class ApplicationData extends Preference {
 
     public void incrementComedianLevel(int offset) {
         this.comedianLevel += offset;
+    }
+
+    public int getBigWalletItemCount() {
+        return bigWalletItemCount;
+    }
+
+    public void setBigWalletItemCount(int bigWalletItemCount) {
+        this.bigWalletItemCount = bigWalletItemCount;
+    }
+
+    public void incrementBigWalletItemCount(int offset) {
+        this.bigWalletItemCount += offset;
+    }
+
+    public void decrementBigWalletItemCount(int offset) {
+        this.bigWalletItemCount -= offset;
+    }
+
+    public void incrementExtraPowerUpSlotItemCount(int offset) {
+        this.extraPowerUpSlotItemCount += offset;
+    }
+
+    public void decrementExtraPowerUpSlotItemCount(int offset) {
+        this.extraPowerUpSlotItemCount -= offset;
+    }
+
+    public int getExtraPowerUpSlotItemCount() {
+        return extraPowerUpSlotItemCount;
+    }
+
+    public void setExtraPowerUpSlotItemCount(int extraPowerUpSlotItemCount) {
+        this.extraPowerUpSlotItemCount = extraPowerUpSlotItemCount;
     }
 }

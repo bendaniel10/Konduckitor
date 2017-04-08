@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.bentech.android.appcommons.activity.AppCommonsActivity;
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.MainActivity;
-import com.bentechapps.konduckitor.activity.fragments.ShopItemFragment;
+import com.bentechapps.konduckitor.activity.fragments.StoreFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,8 +61,7 @@ public class HeaderControls extends RelativeLayout {
     @OnClick(R.id.shop_button)
     void handleShop() {
         if (!isInEditMode()) {
-            ShopItemFragment shopItemFragment = new ShopItemFragment();
-            ((MainActivity) getContext()).switchFragmentsAddToBackStack(R.id.fragment_container, shopItemFragment);
+            ((MainActivity) getContext()).switchFragmentsAddToBackStack(R.id.fragment_container, new StoreFragment());
         }
     }
 }

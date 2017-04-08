@@ -143,7 +143,7 @@ public class Passenger implements GameLoopItem {
     }
 
     public void setTimeLeft(int timeLeft) {
-        this.timeLeft = timeLeft;
+        this.timeLeft = Math.max(timeLeft, 0);
         if (getTimeLeft() >= ((1D / 3D) * getExitTime())) {
             if(lowPatienceSignalled) {
                 lowPatienceSignalled = false;

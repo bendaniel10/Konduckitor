@@ -1,0 +1,12 @@
+- Update store to cater for power up upgrades.
+- Update power up logic to cater for the power up upgrades.
+
+One time purchases:
+- Update store to cater for power up slots in the game. User starts with one slot and can purchase up to 2
+(one time purchase)
+- Large wallet, starts with at least 40 of each denomination.
+- Vault, starts with at least 60 of each denomination.
+- Starter pack of shop items.
+- Super pack of shop items
+- skip missions
+

@@ -10,12 +10,15 @@ import android.view.ViewGroup;
 
 import com.bentechapps.konduckitor.R;
 import com.bentechapps.konduckitor.activity.MainActivity;
-import com.bentechapps.konduckitor.activity.fragments.tutorial.GamePlayTutorialFragment;
 import com.bentechapps.konduckitor.data.GamePlayFragmentData;
 
 /**
  * A simple {@link Fragment} subclass.
+ * <p>
+ * There's no longer be any need to perform overlay tutorial. Instead image sliders will be set up on
+ * a viewpager showing the basic game controls.
  */
+@Deprecated
 public class HelpFragment extends Fragment implements View.OnClickListener {
 
 
@@ -28,7 +31,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState){
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_help, container, false);
     }
@@ -51,10 +54,6 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     }
 
     private void handleTutorial() {
-        GamePlayFragment gamePlayFragment =  new GamePlayTutorialFragment();
-        GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData(getActivity());
-        gamePlayFragment.setGamePlayFragmentData(gamePlayFragmentData);
-
-        mainActivity.switchFragmentsAddToBackStack(R.id.fragment_container, gamePlayFragment);
+        mainActivity.switchFragmentsAddToBackStack(R.id.fragment_container, GamePlayFragment.newInstance(new GamePlayFragmentData()));
     }
 }

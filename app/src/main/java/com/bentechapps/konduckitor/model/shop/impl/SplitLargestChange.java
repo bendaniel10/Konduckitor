@@ -17,7 +17,7 @@ import com.bentechapps.konduckitor.view.custom.WalletButton;
  */
 public class SplitLargestChange extends ShopItem {
     private final ApplicationData appData;
-    private static final int MINIMUM_SPLIT = 5;
+    private static final int MINIMUM_SPLIT = 10;
     public SplitLargestChange(Context context) {
         super(context);
         appData = ApplicationData.getInstance();
@@ -62,7 +62,7 @@ public class SplitLargestChange extends ShopItem {
         GamePlayTailView tailView = gamePlayFragment.getGamePlayTailView();
         DenominationUnit split;
         int splitIndex;
-        int largestCount = Math.min(largestDenomination.getCount(), getUpgradeLevel() + MINIMUM_SPLIT);//upgrade-level 0 will split 5 100s
+        int largestCount = Math.min(largestDenomination.getCount(), getUpgradeLevel() + MINIMUM_SPLIT);//upgrade-level 0 will split 10 100s
 
         for (int i = 0; i < largestCount; i++) {//for each highest denomination
             tailView.decrementDenominationUnitCount((WalletButton) tailView.findViewById(R.id.hundreds), largestDenomination, (short) 1);
@@ -85,7 +85,7 @@ public class SplitLargestChange extends ShopItem {
             passenger = gamePlayFragment.getPassengersAdapter().getItem(j);
 
             if (passenger.getTimeLeft() < passenger.getExitTime()) {
-                passenger.setTimeLeft((short) (passenger.getTimeLeft() - 5));
+                passenger.setTimeLeft((short) (passenger.getTimeLeft() - 20));
             }
 
             final int finalJ = j;
@@ -112,7 +112,6 @@ public class SplitLargestChange extends ShopItem {
 
     @Override
     public void incrementUpgradeLevel(int offset) {
-        super.incrementUpgradeLevel(offset);
         appData.incrementSplitLargestChangeLevel(offset);
     }
 

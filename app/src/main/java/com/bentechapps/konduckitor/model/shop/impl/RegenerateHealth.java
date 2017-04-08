@@ -82,7 +82,6 @@ public class RegenerateHealth extends ShopItem {
 
     @Override
     public void incrementUpgradeLevel(int offset) {
-        super.incrementUpgradeLevel(offset);
         appData.incrementRegenerateLevel(offset);
     }
 

@@ -20,6 +20,7 @@ import com.bentechapps.konduckitor.view.animation.AnimationFactory;
  * Created by Daniel on 5/13/2015.
  */
 public class MissionItem extends RelativeLayout implements View.OnClickListener {
+    private static final String TAG = MissionItem.class.getSimpleName();
     private final ImageView lockedImage;
     private final TextView missionNumber;
     private final ApplicationData appData;
@@ -27,6 +28,7 @@ public class MissionItem extends RelativeLayout implements View.OnClickListener 
 
     private Mission mission;
     private Level level;
+    private boolean isLocked;
 
     public MissionItem(Context context) {
         super(context);
@@ -42,37 +44,67 @@ public class MissionItem extends RelativeLayout implements View.OnClickListener 
 
     public MissionItem setMission(Mission mission) {
         this.mission = mission;
-        boolean isLocked = (mission.getMission() > appData.getCurrentMission() &&
-                !(level.getLevelNumber() == 1 && mission.getMission() == 1)) ||
-                level.getLevelNumber() > appData.getCurrentLevel();
+        this.isLocked = isLocked();
+
+        boolean isLocked = isLocked();
+
         lockedImage.setVisibility(isLocked ? VISIBLE : GONE);
         missionNumber.setText(String.valueOf(mission.getMission()));
         missionNumber.setVisibility(!isLocked ? VISIBLE : GONE);
-        passImage.setVisibility(mission.getMission() < appData.getCurrentMission() && level.getLevelNumber() <= appData.getCurrentLevel() ? VISIBLE : GONE);
+        passImage.setVisibility((level.getLevelNumber() < appData.getCurrentLevel()) || mission.getMission() < appData.getCurrentMission() && level.getLevelNumber() <= appData.getCurrentLevel() ? VISIBLE : GONE);
         return this;
+    }
+
+    private boolean isLocked() {
+        boolean locked;
+
+        //first level, first mission always unlocked.
+        if (mission.getMission() == 1 && level.getLevelNumber() == 1) {
+            return false;
+        }
+
+        int cachedLevel = ApplicationData.getInstance().getCurrentLevel();
+        int cachedMission = ApplicationData.getInstance().getCurrentMission();
+
+        //unlock all previous missions in passed levels.
+        if(level.getLevelNumber() < cachedLevel) {
+            return false;
+        }
+
+        //
+        if(level.getLevelNumber() <= cachedLevel && mission.getMission() <= cachedMission) {
+            locked = false;
+        } else {
+            locked = true;
+        }
+
+
+
+        return locked;
     }
 
     @Override
     public void onClick(View v) {
 
-        if (ApplicationData.getInstance().getCurrentMission() < mission.getMission()) {
+        if (this.isLocked) {
             lockedImage.startAnimation(AnimationFactory.newWobbleAnimation());
         } else {
             MainActivity mainActivity = ((MainActivity) getContext());
-            GamePlayFragment gamePlayFragment = new GamePlayFragment().setGamePlayFragmentData(new GamePlayFragmentData(getContext()));
-            gamePlayFragment.getGamePlayFragmentData().setIsMissionMode(true);
+
+            GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData();
+            gamePlayFragmentData.setIsMissionMode(true);
 
             mission.restartMission();
-            gamePlayFragment.getGamePlayFragmentData().setCurrentMission(mission);
+            gamePlayFragmentData.setCurrentMission(mission);
 
-            gamePlayFragment.getGamePlayFragmentData().setCurrentLevel(level);
+            gamePlayFragmentData.setCurrentLevel(level);
 
-            level.getMissionInfoHolder().reset();
-            level.getMissionInfoHolder().setScore(0);//above doesn't reset score see doc.
+            level.getMissionInfoHolder().resetAllExceptScore();
+            level.getMissionInfoHolder().setScore(0);//above doesn't resetAllExceptScore score see doc.
 
-            gamePlayFragment.getGamePlayFragmentData().setMissionInfoHolder(level.getMissionInfoHolder());
+            gamePlayFragmentData.setMissionInfoHolder(level.getMissionInfoHolder());
 
-            mainActivity.switchFragmentsAddToBackStack(R.id.fragment_container, gamePlayFragment);
+            mainActivity.switchFragmentsAddToBackStack(R.id.fragment_container, GamePlayFragment.newInstance(gamePlayFragmentData));
         }
     }
 

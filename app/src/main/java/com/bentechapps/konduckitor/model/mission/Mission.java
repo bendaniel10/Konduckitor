@@ -10,13 +10,14 @@ import com.bentechapps.konduckitor.sound.Sound;
 import com.bentechapps.konduckitor.view.GamePlayHeaderView;
 import com.bentechapps.konduckitor.view.custom.MissionCompletedDialog;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Daniel on 4/10/2015.
  */
-public abstract class Mission implements GameLoopItem {
+public abstract class Mission implements GameLoopItem, Serializable {
 
     private final Level level;
     private List<SubMission> subMissionList = new ArrayList<>();

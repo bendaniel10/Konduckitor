@@ -119,10 +119,7 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
     }
 
     private void handleReplay() {
-        GamePlayFragment gamePlayFragment = new GamePlayFragment();
-        GamePlayFragmentData gamePlayFragmentData = new GamePlayFragmentData(getActivity());
-        gamePlayFragment.setGamePlayFragmentData(gamePlayFragmentData);
-        mainActivity.switchFragmentsAddToBackStack(R.id.fragment_container, gamePlayFragment);
+        mainActivity.switchFragmentsAddToBackStack(R.id.fragment_container, GamePlayFragment.newInstance(new GamePlayFragmentData()));
         Sound.playReplaySfx();
     }
 
